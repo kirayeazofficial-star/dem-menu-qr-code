@@ -1,0 +1,23 @@
+{
+  "name": "dem-menu-qr-code",
+  "version": "1.0.0",
+  "private": true,
+  "description": "DEM məkanı üçün QR menyu və idarəetmə paneli",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "admin:set": "node scripts/set-admin.js",
+    "test": "node --test",
+    "build": "node --check server.js && node --check storage.js && node --check public/site.js && node --check public/admin.js"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.18.0",
+    "express": "^5.2.1",
+    "multer": "^2.0.2",
+    "qrcode": "^1.5.4"
+  }
+}
