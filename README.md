@@ -101,3 +101,7 @@ Telefon +994 70 686 12 11 formatında göstərilir. Wi-Fi düymələri tək əm�
 ## Sahibin hazır menyusu
 
 Nümunə məhsullar sahibin göndərdiyi iki PDF əsasında hazırlanmış kataloqla əvəz olunur. İlk açılışda pivə setləri göstərilir; digər kateqoriyalar düymələrdən seçilir. Axtarış bütün menyunu əhatə edir. Hər iki orijinal PDF saytdan açıla bilər. Mənbə, əhatə və oxunma məhdudiyyətləri `MENU_IMPORT.md` faylındadır. Mövcud məlumatların idxaldan əvvəlki surəti bazada saxlanır; şəxsi əlavə və məkan məlumatları qorunur. `npm test` PDF qiymətləri, admin redaktəsi, mənbə faylları və idxalın təkrarlanmamasını da yoxlayır.
+
+## Vercel-də framework seçimi
+
+`vercel.json` faylında `framework: null` qəsdən təyin edilib. Saytın statik çıxışı `public/`, serverless API girişi isə `api/index.js`-dir. Express avtomatik seçilərsə, Vercel səhvən `public/` daxilində server entrypoint axtara bilər. Bu dəyişiklik Vercel CLI 65.7.0 ilə, lokal layihə ayarında Express seçilmiş halda yoxlanıb: statik səhifələr və `nodejs24.x` API funksiyası yaradılıb. Bu lokal build yoxlaması Production mühitinin məxfi dəyişənlərinin və canlı Turso bağlantısının yoxlanması demək deyil.
