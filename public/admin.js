@@ -1,6 +1,17 @@
 const $=id=>document.getElementById(id);let state,dirty=false;const fields=['name','tagline','description','phone','address','mapUrl','wifiName','wifiPassword','hours','instagram','tiktok','publicUrl','currency'];
 function status(id,message,error=false){$(id).textContent=message;$(id).className=`notice ${error?'error':'success'}`;}
-async function api(path,options={}){const response=await fetch(path,options);const data=await response.json();if(!response.ok){if(response.status===401&&path!=='/api/login'){ $('dashboard').hidden=true;$('login-panel').hidden=false;$('logout').hidden=true;}throw Error(data.error||'Sorğu alınmadı.');}return data;}
+async function api(path,options={}){
+ const response=await fetch(path,options);
+ const raw=await response.text();let data;
+ try{data=JSON.parse(raw);}catch{throw Error(`Server düzgün cavab vermədi (HTTP ${response.status}). Vercel-də son yayımın Logs bölməsini yoxlayın.`);}
+ if(!response.ok){
+  if(response.status===401&&path!=='/api/login'){ $('dashboard').hidden=true;$('login-panel').hidden=false;$('logout').hidden=true;}
+  throw Error(data?.error||`Sorğu alınmadı (HTTP ${response.status}).`);
+ }
+ if(!data||typeof data!=='object')throw Error('Server cavabı düzgün deyil.');
+ return data;
+}
+
 function mark(){dirty=true;status('save-status','Yadda saxlanmamış dəyişikliklər var.');}
 function input(value,callback,options={}){const el=document.createElement('input');Object.assign(el,{value,...options});el.addEventListener('input',()=>{callback(el.value);mark();});return el;}
 function button(label,callback){const el=document.createElement('button');el.type='button';el.className='plain-button danger';el.textContent=label;el.onclick=callback;return el;}

@@ -105,3 +105,11 @@ Nümunə məhsullar sahibin göndərdiyi iki PDF əsasında hazırlanmış katal
 ## Vercel-də framework seçimi
 
 `vercel.json` faylında `framework: null` qəsdən təyin edilib. Saytın statik çıxışı `public/`, serverless API girişi isə `api/index.js`-dir. Express avtomatik seçilərsə, Vercel səhvən `public/` daxilində server entrypoint axtara bilər. Bu dəyişiklik Vercel CLI 65.7.0 ilə, lokal layihə ayarında Express seçilmiş halda yoxlanıb: statik səhifələr və `nodejs24.x` API funksiyası yaradılıb. Bu lokal build yoxlaması Production mühitinin məxfi dəyişənlərinin və canlı Turso bağlantısının yoxlanması demək deyil.
+
+## Admin server xətası verəndə
+
+Vercel girişində startup xətaları JSON 503 cavabı ilə qaytarılır; baza URL-i, baza tokeni və admin şifrəsinin uzunluğu üçün ayrıca xəta kodları var. Məxfi dəyərlər loga yazılmır. Digər başlanğıc xətaları üçün Runtime Logs-da `DEM API initialization failed` və xəta kodunu yoxlayın. Admin brauzeri Vercel-in plaintext/HTML xətasını da göstərir və JSON parse xətasını istifadəçiyə çıxarmır.
+
+Uzaq Turso bağlantısı `@libsql/client/http` ilə stateless HTTPS üzərindən, lokal iş isə SQLite ilə işləyir. Lokal testlərin və Vercel build-in keçməsi canlı Turso icazələrinin yoxlanması deyil.
+
+`dem-menu-qr-code-<deployment-id>-<team>.vercel.app` konkret yayımın ünvanıdır; sonrakı push və redeploy nəticələri həmin köhnə linki dəyişdirmir. Yeni yayımı Vercel-də son Ready deployment-in Visit düyməsi ilə açın, daimi istifadə üçün layihənin Production domenini götürün.
