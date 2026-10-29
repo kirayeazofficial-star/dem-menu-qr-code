@@ -1,6 +1,7 @@
 const $ = id => document.getElementById(id);
 let settings;
 let activeCategory = 'all';
+let previewMode = false;
 
 function setText(id, value) { $(id).textContent = value || ''; }
 function formatPrice(price) {
@@ -107,9 +108,17 @@ function renderCategories() {
 }
 async function load() {
   try {
-    const response = await fetch('/api/settings');
-    if (!response.ok) throw new Error('Settings unavailable');
-    settings = await response.json();
+    try {
+      const response = await fetch('/api/settings', {signal:AbortSignal.timeout(6000)});
+      if (!response.ok) throw new Error('Settings unavailable');
+      settings = await response.json();
+      if (!Array.isArray(settings.items) || !Array.isArray(settings.categories)) throw new Error('Invalid settings');
+    } catch {
+      const demo = await fetch('/sample-menu.json');
+      if (!demo.ok) throw new Error('Demo unavailable');
+      settings = await demo.json();
+      previewMode = true;
+    }
     setText('visible-wifi-name', settings.wifiName || 'Heyətimizdən soruşun');
     setText('visible-wifi-password', settings.wifiPassword || 'Heyətimizdən soruşun');
     $('visible-wifi-copy').hidden = !settings.wifiPassword;
@@ -119,6 +128,7 @@ async function load() {
     setText('tagline', settings.tagline);
     $('tagline').hidden = !settings.tagline;
     $('sample-notice').hidden = !settings.sampleMenu;
+    if (previewMode) setText('sample-notice','Nümunə menyu · Aktual menyu və qiymətlər üçün bizə zəng edin.');
     $('illustration-note').hidden = !settings.sampleMenu;
     if (settings.profileImage) {
       $('profile').src = settings.profileImage;
@@ -131,6 +141,11 @@ async function load() {
       $('photo-caption').hidden = true;
     }
     setText('info-address', settings.address);
+    setText('map-address', settings.address);
+    $('map-section').hidden = !settings.address;
+    setText('map-placeholder-address',settings.address);
+    if(settings.address) $('venue-map').dataset.src = `https://maps.google.com/maps?q=${encodeURIComponent(settings.name+' '+settings.address)}&output=embed`;
+    $('map-external').href=settings.mapUrl||`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(settings.name+' '+settings.address)}`;
     $('info-map').hidden = !settings.address && !settings.mapUrl;
     $('info-map').href = settings.mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(settings.address)}`;
     setText('contact-phone', settings.phone || 'Telefon qeyd edilməyib');
@@ -186,3 +201,7 @@ $('visible-wifi-copy').onclick = async () => {
     setText('visible-copy-status', 'Şifrəni seçərək kopyalaya bilərsiniz.');
   }
 };
+
+$('bottom-wifi').onclick=()=>$('wifi-open').click();
+
+$('load-map').onclick=()=>{const frame=$('venue-map');if(!frame.dataset.src)return;frame.src=frame.dataset.src;frame.hidden=false;$('map-placeholder').hidden=true;};

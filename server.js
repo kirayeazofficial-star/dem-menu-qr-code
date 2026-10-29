@@ -11,7 +11,7 @@ const app = express();
 const secure = process.env.VERCEL || process.env.COOKIE_SECURE === 'true';
 app.disable('x-powered-by');
 if (process.env.VERCEL || process.env.TRUST_PROXY === 'true') app.set('trust proxy', 1);
-app.use((req,res,next)=>{res.set({'X-Content-Type-Options':'nosniff','Referrer-Policy':'same-origin','X-Frame-Options':'DENY','Content-Security-Policy':"default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"}); next();});
+app.use((req,res,next)=>{res.set({'X-Content-Type-Options':'nosniff','Referrer-Policy':'same-origin','X-Frame-Options':'DENY','Content-Security-Policy':"default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'self'; frame-src https://maps.google.com https://www.google.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"}); next();});
 app.use(express.json({limit:'256kb'}));
 app.use('/api', (_req,res,next)=>{res.set('Cache-Control','no-store');next();});
 function digest(token){return createHash('sha256').update(token).digest('hex');}

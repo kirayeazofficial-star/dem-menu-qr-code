@@ -63,3 +63,9 @@ Admin sessiyası 8 saatdır; cookie HttpOnly və SameSite=Strict parametrləri i
 ## Mövcud boş bazaya nümunə əlavə etmək
 
 `node scripts/seed-demo.js` yalnız məhsulu olmayan bazaya nümunə menyu əlavə edir; mövcud məhsulları əvəz etmir. Əmr verilmiş Turso dəyişənləri varsa uzaq bazaya təsir edir, buna görə yalnız nəzərdə tutulan bazada işlədin. Yeni bazalar nümunə menyu ilə avtomatik başlayır.
+
+## Şəkillər və xəritə
+
+Menyu şəkilləri və pub atmosferi üçün yaradılmış şəkillər layihənin `public/assets/` qovluğundadır. Yeni build `public/sample-menu.json` faylını açıq nümunə məlumatları ilə yaradır. API əlçatan olmayanda müştəri səhifəsi yalnız aydın işarələnmiş nümunə menyu göstərir; bu, bazanın və admin panelinin hazır olması demək deyil. Heç bir admin məlumatı və Wi-Fi şifrəsi bu statik fayla köçürülmür.
+
+Xəritə paneli adminin daxil etdiyi ünvan üzrə Google Maps axtarışını açır. Dəqiq məkan pinini seçmək üçün xəritə keçidini paneldə qeyd edin; “Xəritədə aç” həmin keçiddən istifadə edir. Daxili xəritə istifadəçi “Google xəritəsini göstər” düyməsinə basanda yüklənir; Google xidmətinə brauzerdən giriş tələb olunur. Xəritə rəsmlərinin xarici şəbəkədə yüklənməsi lokal avtomatik testlərlə təsdiqlənməyib.

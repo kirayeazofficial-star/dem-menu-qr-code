@@ -12,7 +12,7 @@
     "dev": "node --watch server.js",
     "admin:set": "node scripts/set-admin.js",
     "test": "node --test",
-    "build": "node --check server.js && node --check storage.js && node --check public/site.js && node --check public/admin.js"
+    "build": "node scripts/build-demo.js && node --check server.js && node --check storage.js && node --check public/site.js && node --check public/admin.js"
   },
   "dependencies": {
     "@libsql/client": "^0.18.0",
