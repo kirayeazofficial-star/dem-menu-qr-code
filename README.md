@@ -22,7 +22,7 @@ Sayt 3000 portunda açılır, admin paneli `/admin` yolundadır. İnkişaf zaman
 - Menyu kateqoriyaları, məhsullar, təsvirlər, qiymətlər və görünürlük
 - Saytın daimi ünvanı və çap üçün PNG formatında QR kod
 
-İlkin məlumatlar göndərilən ekran şəklindən götürülüb: Dəm RestoPub, Buzovna, Zuğulba 24 B, +994 70 686 12 11. Dəqiq qiymətlər təqdim edilmədiyi üçün menyu boşdur. Loqonun orijinal faylını paneldə “Profil şəkli / loqo” sahəsindən yükləyin. Qonaq səhifəsində loqo yüklənənə qədər mətn əsaslı marka göstərilir.
+İlkin məlumatlar göndərilən ekran şəklindən götürülüb: Dəm RestoPub, Buzovna, Zuğulba 24 B, +994 70 686 12 11. Sahibin istəyi ilə 6 şəkilli nümunə məhsul və şərti qiymətlər əlavə edilib; bunlar saytda “Nümunə menyu” kimi işarələnir. Həqiqi menyunu paneldən daxil etdikdən sonra nümunə menyu seçimini söndürün. Şəkillər yaradılmış illüstrasiyalardır, məkanın həqiqi fotoşəkilləri deyil. Loqonun orijinal faylını paneldə “Profil şəkli / loqo” sahəsindən yükləyin. Qonaq səhifəsində loqo yüklənənə qədər mətn əsaslı marka göstərilir.
 
 Dəyişikliklərin saytda görünməsi üçün **Dəyişiklikləri yadda saxla** düyməsini basın. QR kod eyni domenə yönəldiyi müddətdə menyu və Wi-Fi dəyişəndə onu yenidən çap etmək lazım deyil. QR kod xəritə, menyu və Wi-Fi keçidlərini bir saytda birləşdirir; Wi-Fi-a avtomatik qoşulma kodu deyil.
 
@@ -59,3 +59,7 @@ Vercel-də HTTPS cookie və etibarlı proxy parametrləri avtomatik tətbiq olun
 | `TRUST_PROXY` | `false` | Bir etibarlı reverse proxy üçün `true` qoyun |
 
 Admin sessiyası 8 saatdır; cookie HttpOnly və SameSite=Strict parametrləri ilə qorunur. Giriş cəhdlərinin limiti bazada saxlanaraq ayrı serverless instansiyalarda da işləyir. SVG yükləmələri qəbul edilmir. `data/`, `.env` və `node_modules/` Git-ə daxil edilmir.
+
+## Mövcud boş bazaya nümunə əlavə etmək
+
+`node scripts/seed-demo.js` yalnız məhsulu olmayan bazaya nümunə menyu əlavə edir; mövcud məhsulları əvəz etmir. Əmr verilmiş Turso dəyişənləri varsa uzaq bazaya təsir edir, buna görə yalnız nəzərdə tutulan bazada işlədin. Yeni bazalar nümunə menyu ilə avtomatik başlayır.
