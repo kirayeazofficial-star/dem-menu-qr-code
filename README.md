@@ -97,3 +97,7 @@ Admin paneli saytın `/admin` yolundadır; giriş üçün Vercel-də ilkin olara
 Vercel layihəsində Environment Variables bölməsində `DEM_ADMIN_PASSWORD` üçün yeni, əvvəllər istifadə edilməmiş, 12–512 simvolluq şifrə təyin edin; Production üçün yadda saxlayın və Redeploy edin. Yeni yayımın ilk API sorğusunda şifrə yenilənir və köhnə sessiyalar bağlanır. Şifrəni çata göndərməyin.
 
 Telefon +994 70 686 12 11 formatında göstərilir. Wi-Fi düymələri tək əməliyyat qrupundadır; telefon və WhatsApp ayrıca kartda yerləşir. Üz qabığı bölünməmiş pub interyeridir, loqo sağ tərəfdədir.
+
+## Sahibin hazır menyusu
+
+Nümunə məhsullar sahibin göndərdiyi iki PDF əsasında hazırlanmış kataloqla əvəz olunur. İlk açılışda pivə setləri göstərilir; digər kateqoriyalar düymələrdən seçilir. Axtarış bütün menyunu əhatə edir. Hər iki orijinal PDF saytdan açıla bilər. Mənbə, əhatə və oxunma məhdudiyyətləri `MENU_IMPORT.md` faylındadır. Mövcud məlumatların idxaldan əvvəlki surəti bazada saxlanır; şəxsi əlavə və məkan məlumatları qorunur. `npm test` PDF qiymətləri, admin redaktəsi, mənbə faylları və idxalın təkrarlanmamasını da yoxlayır.

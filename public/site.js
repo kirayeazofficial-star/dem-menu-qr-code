@@ -9,11 +9,9 @@ function closeWifi(){ $('wifi-dialog').close();concealWifi(); }
 function setText(id, value) { $(id).textContent = value || ''; }
 function displayPhone(value){const digits=value.replace(/\D/g,'');const international=digits.length===10&&digits.startsWith('0')?'994'+digits.slice(1):digits;return international.length===12&&international.startsWith('994')?`+994 ${international.slice(3,5)} ${international.slice(5,8)} ${international.slice(8,10)} ${international.slice(10)}`:value;}
 function formatPrice(price) {
-  return price.toLocaleString('az-AZ', {
-    minimumFractionDigits: Number.isInteger(price) ? 0 : 2,
-    maximumFractionDigits: 2
-  });
+  return price.toFixed(Number.isInteger(price)?0:2).replace('.',',');
 }
+
 function photograph(item) {
   if (item.image) {
     const img = document.createElement('img');
@@ -43,18 +41,19 @@ function photograph(item) {
   return empty;
 }
 function openProduct(item) {
+  $('product-photo').hidden=!item.image;
   $('product-photo').replaceChildren(photograph(item));
   setText('product-category', settings.categories.find(c => c.id === item.category)?.name);
   setText('product-name', item.name);
   setText('product-description', item.description);
-  setText('product-price', `${formatPrice(item.price)} ${settings.currency}`);
+  setText('product-price', item.pricePending?'Qiyməti dəqiqləşdirilir':`${formatPrice(item.price)} ${settings.currency}`);
   $('product-sample').hidden = !settings.sampleMenu;
   $('product-dialog').showModal();
 }
 function renderItems() {
   const query = $('search').value.trim().toLocaleLowerCase('az');
   const items = settings.items.filter(item => item.available
-    && (activeCategory === 'all' || item.category === activeCategory)
+    && (query || activeCategory === 'all' || item.category === activeCategory)
     && `${item.name} ${item.description}`.toLocaleLowerCase('az').includes(query));
   setText('category-title', query ? 'Axtarış nəticələri'
     : activeCategory === 'all' ? 'Bütün məhsullar'
@@ -70,7 +69,7 @@ function renderItems() {
   }
   for (const item of items) {
     const article = document.createElement('article');
-    article.className = 'menu-card';
+    article.className = 'menu-card'+(item.image?' official-set':' text-menu-card');
     const photoButton = document.createElement('button');
     photoButton.type = 'button';
     photoButton.className = 'dish-button';
@@ -81,18 +80,20 @@ function renderItems() {
     body.className = 'dish-body';
     const name = document.createElement('h4');
     name.className = 'dish-name';
-    name.textContent = item.name;
+    const titleButton=document.createElement('button');titleButton.type='button';titleButton.className='dish-title-button';titleButton.textContent=item.name;titleButton.onclick=()=>openProduct(item);name.append(titleButton);
     const description = document.createElement('p');
     description.className = 'dish-description';
     description.textContent = item.description;
     const price = document.createElement('strong');
     price.className = 'dish-price';
-    price.textContent = formatPrice(item.price);
+    price.textContent = item.pricePending?'Qiyməti soruşun':formatPrice(item.price);
+    if(item.pricePending)price.classList.add('pending-price');
     const currency = document.createElement('small');
     currency.textContent = settings.currency;
-    price.append(currency);
+    if(!item.pricePending)price.append(currency);
     body.append(name, description, price);
-    article.append(photoButton, body);
+    if(item.image)article.append(photoButton);
+    article.append(body);
     $('items').append(article);
   }
 }
@@ -144,8 +145,9 @@ async function load() {
     $('quick-whatsapp').hidden=!settings.phone;
     setText('tagline', settings.tagline);
     $('tagline').hidden = !settings.tagline;
-    $('sample-notice').hidden = !settings.sampleMenu;
-    if (previewMode) setText('sample-notice','Nümunə menyu · Aktual menyu və qiymətlər üçün bizə zəng edin.');
+    activeCategory=settings.categories.some(c=>c.id==='pdf-sets')?'pdf-sets':'all';
+    $('sample-notice').hidden = !settings.sampleMenu&&!previewMode;
+    if (previewMode) setText('sample-notice','PDF menyusu · Aktual məlumat üçün bizimlə əlaqə saxlayın.');
     $('illustration-note').hidden = !settings.sampleMenu;
     if (settings.profileImage) {
       $('profile').src = settings.profileImage;
