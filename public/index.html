@@ -1,1 +1,64 @@
-<!doctype html><html lang="az"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#122a23"><meta name="description" content="Dəm RestoPub — rəqəmsal menyu, əlaqə və məkan məlumatları."><title>Dəm RestoPub · Menyu</title><link rel="stylesheet" href="/style.css"><script src="/site.js" defer></script></head><body><header class="topbar"><a class="wordmark" href="/">DƏM<span>RESTOPUB</span></a><span class="topnote">RESTORAN & PUB <span class="separator">/</span> BUZOVNA</span><a class="small-link" href="#menu">MENYU ↗</a></header><main><section class="hero"><div class="hero-copy"><span class="eyebrow"><span class="gold-line"></span> DƏMƏ XOŞ GƏLMİSİNİZ</span><h1 id="venue-name">Dəm RestoPub</h1><p class="hero-tagline" id="tagline">Yaxşı dadlar. Xoş anlar.</p><p class="muted" id="description"></p><a class="gold-button" href="#menu">Menyunu kəşf et <span>↓</span></a><div class="hero-meta"><span id="hero-address"></span><span id="hero-hours"></span></div></div><div class="brand-art" id="brand-art"><img class="pub-photo" id="hero-photo" src="/assets/pub-hero.png" alt="Neon işıqlı pub atmosferində köpüklü pivə və qəlyanaltılar" fetchpriority="high"><div class="photo-shade"></div><div class="hero-seal"><img id="profile" alt="Məkanın loqosu" hidden><div id="fallback-brand" class="classic-logo"><img class="flame" src="/flame.svg" alt=""><strong>DƏM</strong><span class="brand-sub">— RESTOPUB —</span></div></div><span class="photo-caption" id="photo-caption">İllüstrativ pub görünüşü</span></div></section><section class="quick-links" aria-label="Məkan məlumatları"><a id="call-link" hidden><span class="quick-icon">↗</span><span>Zəng et<small>Bir zəng qədər yaxınıq</small></span></a><a id="map-link" hidden target="_blank" rel="noopener"><span class="quick-icon">⌖</span><span>Bizi tap<small>Ünvan və istiqamət</small></span></a><button id="wifi-open"><span class="quick-icon">⌁</span><span>Wi-Fi<small>Rahatca qoşul</small></span></button><a id="whatsapp-link" hidden target="_blank" rel="noopener"><span class="quick-icon">◌</span><span>WhatsApp<small>Bizə yaz</small></span></a></section><section id="menu" class="menu-section"><div class="section-top"><div><span class="eyebrow">SEÇİMİNİZƏ BİR TOXUNUŞ</span><h2>Menyu</h2><p class="menu-intro">Kateqoriyanı seç, sevdiyin dadı tap.</p></div><label class="search-box"><span>⌕</span><input id="search" type="search" placeholder="Menyuda axtar…" aria-label="Menyuda axtar"></label></div><div id="sample-notice" class="sample-notice" hidden><span class="sample-pill">NÜMUNƏ MENYU</span><span>Qiymətlər və şəkillər şərtidir.</span></div><nav id="categories" class="tabs" aria-label="Menyu kateqoriyaları"></nav><div id="items" class="menu-grid" aria-live="polite"><p class="empty">Menyu yüklənir…</p></div></section><section class="venue-info" aria-label="Məkan haqqında məlumatlar"><div class="info-heading"><h2>Məkan məlumatları</h2></div><div class="info-grid"><article class="info-card"><div class="info-title"><span class="info-symbol">⌁</span><h3>Wi-Fi məlumatları</h3></div><dl class="info-list"><div><dt>Şəbəkənin adı</dt><dd id="inline-wifi-name">Heyətimizdən soruşun</dd></div><div><dt>Şifrə</dt><dd><span id="inline-wifi-password">—</span><button id="inline-copy" class="copy-icon" aria-label="Wi-Fi şifrəsini kopyala" hidden>⧉</button></dd></div></dl><p id="inline-copy-status" class="inline-status" role="status"></p></article><article class="info-card"><div class="info-title"><span class="info-symbol">◷</span><h3>İş saatları</h3></div><p id="info-hours" class="info-value">İş saatları üçün bizimlə əlaqə saxlayın.</p><p class="info-footnote">Gəlişindən əvvəl zəng edə bilərsən.</p></article><article class="info-card"><div class="info-title"><span class="info-symbol">↗</span><h3>Əlaqə</h3></div><a id="info-phone" class="info-phone"></a><p class="info-footnote">Zəng və WhatsApp ilə əlaqə.</p></article><article class="info-card"><div class="info-title"><span class="info-symbol">⌖</span><h3>Ünvan</h3></div><p id="info-address" class="info-value"></p><a id="info-map" class="map-action" target="_blank" rel="noopener">Xəritədə istiqamət al ↗</a></article></div></section><section id="contact" class="contact-section"><div><span class="eyebrow">DƏM RESTOPUB</span><h2>Əlaqədə qalaq.</h2><p id="contact-address"></p><p id="contact-hours" class="muted"></p></div><div class="contact-details"><a id="contact-phone"></a><a id="instagram" target="_blank" rel="noopener" hidden>Instagram ↗</a><a id="tiktok" href="https://www.tiktok.com/@cahanhsv" target="_blank" rel="noopener">TikTok ↗</a><p class="muted">Dadlı yeməklər, səmimi söhbətlər.</p></div></section></main><nav class="mobile-nav" aria-label="Sürətli keçidlər"><a href="#menu"><span>☷</span>Menyu</a><button id="mobile-wifi"><span>⌁</span>Wi-Fi</button><a href="#contact"><span>⌖</span>Əlaqə</a></nav><footer><a class="wordmark" href="/">DƏM<span>RESTOPUB</span></a><span>Hər gəlişin bir xatirə.</span><a class="small-link" href="/admin">İdarəetmə ↗</a></footer><dialog id="wifi-dialog"><button id="wifi-close" class="dialog-close" aria-label="Bağla">×</button><span class="eyebrow">ƏLAQƏDƏ QAL</span><h2>Wi-Fi</h2><p id="wifi-status"></p><dl><dt>Şəbəkə</dt><dd id="wifi-name"></dd><dt>Şifrə</dt><dd id="wifi-password"></dd></dl><button class="gold-button" id="wifi-copy">Şifrəni kopyala</button><p id="copy-status" role="status"></p></dialog><dialog id="product-dialog"><button id="product-close" class="dialog-close" aria-label="Məhsulu bağla">×</button><div id="product-photo"></div><span id="product-category" class="eyebrow"></span><h2 id="product-name"></h2><p id="product-description"></p><strong id="product-price" class="price"></strong><p id="product-sample" class="muted">Nümunə məhsul · qiymət və şəkil şərtidir.</p></dialog><div id="load-error" class="toast" role="alert" hidden></div></body></html>
+<!doctype html>
+<html lang="az">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#111813">
+  <meta name="description" content="Dəm RestoPub — menyu, qiymətlər və məkan məlumatları.">
+  <title>Dəm RestoPub · Menyu</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/site.js" defer></script>
+</head>
+<body>
+<svg class="svg-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M2 8.5a16 16 0 0 1 20 0M5.5 12a10.5 10.5 0 0 1 13 0M9 15.5a5 5 0 0 1 6 0"/><circle cx="12" cy="19" r=".7"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="m7 3 3 5-2.5 2a13 13 0 0 0 6.5 6.5l2-2.5 5 3-1 4C10 22 2 14 3 4Z"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M19 10c0 6-7 11-7 11S5 16 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M15 5V3H3v13h2"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+</defs></svg>
+<div class="page-shell">
+  <header class="venue-header">
+    <a class="brand" href="/" aria-label="Dəm RestoPub ana səhifə">
+      <span class="logo-frame"><img id="profile" alt="Dəm loqosu" hidden><span id="fallback-brand" class="classic-logo"><img src="/flame.svg" alt=""><strong>DƏM</strong><small>RESTOPUB</small></span></span>
+      <span class="brand-text"><h1 id="venue-name">Dəm RestoPub</h1><span id="header-address">Buzovna, Zuğulba 24 B</span></span>
+    </a>
+    <button id="wifi-open" class="utility-button"><svg class="icon"><use href="#i-wifi"/></svg><span>Wi-Fi</span></button>
+  </header>
+
+  <section class="cover" aria-label="Məkanın üz qabığı">
+    <img id="hero-photo" src="/assets/pub-hero.png" alt="Pub atmosferində soyuq pivə və qəlyanaltılar" fetchpriority="high">
+    <div class="cover-tint"></div>
+    <div class="cover-caption"><span class="cover-kicker">DƏM RESTOPUB</span><p id="tagline">Yaxşı dadlar. Xoş anlar.</p></div>
+    <span id="photo-caption" class="photo-caption">İllüstrativ şəkil</span>
+  </section>
+
+  <main id="menu">
+    <div class="menu-toolbar"><div><h2>Menyu</h2><p id="sample-notice" hidden>Nümunə menyu <span>· Qiymətlər şərtidir</span></p></div><label class="search-box"><svg class="icon"><use href="#i-search"/></svg><input id="search" type="search" placeholder="Məhsul axtar" aria-label="Menyuda axtar"></label></div>
+    <nav id="categories" class="categories" aria-label="Menyu kateqoriyaları"></nav>
+    <div class="results-header"><h3 id="category-title">Bütün məhsullar</h3><span id="result-count"></span></div>
+    <div id="items" class="menu-grid" aria-live="polite"><p class="empty">Menyu yüklənir…</p></div>
+    <p class="menu-note" id="illustration-note" hidden>Şəkillər təqdimat nümunəsidir.</p>
+  </main>
+
+  <section id="contact" class="venue-details">
+    <details><summary>Əlaqə və məkan məlumatları <svg class="icon"><use href="#i-chevron"/></svg></summary>
+      <div class="details-content">
+        <div class="contact-block"><span class="label">Ünvan</span><p id="info-address"></p><a id="info-map" class="text-link" target="_blank" rel="noopener">Xəritədə aç <svg class="icon"><use href="#i-arrow"/></svg></a></div>
+        <div class="contact-block"><span class="label">Telefon</span><a id="contact-phone" class="contact-number"></a><a id="whatsapp-link" class="text-link" target="_blank" rel="noopener" hidden>WhatsApp <svg class="icon"><use href="#i-arrow"/></svg></a></div>
+        <div class="contact-block"><span class="label">İş saatları</span><p id="info-hours">Məlumat üçün bizimlə əlaqə saxlayın.</p></div>
+        <div class="contact-block"><span class="label">Sosial şəbəkələr</span><div class="social-links"><a id="instagram" target="_blank" rel="noopener" hidden>Instagram</a><a id="tiktok" target="_blank" rel="noopener" hidden>TikTok</a></div></div>
+      </div>
+    </details>
+  </section>
+  <footer><span>Dəm RestoPub</span><a href="/admin">İdarəetmə</a></footer>
+</div>
+
+<dialog id="wifi-dialog" aria-labelledby="wifi-title"><button id="wifi-close" class="close-button" aria-label="Bağla"><svg class="icon"><use href="#i-close"/></svg></button><svg class="dialog-symbol icon"><use href="#i-wifi"/></svg><h2 id="wifi-title">Wi-Fi məlumatları</h2><dl class="wifi-data"><div><dt>Şəbəkə</dt><dd id="wifi-name"></dd></div><div><dt>Şifrə</dt><dd id="wifi-password"></dd></div></dl><button class="primary-button" id="wifi-copy"><svg class="icon"><use href="#i-copy"/></svg>Şifrəni kopyala</button><p id="copy-status" role="status"></p></dialog>
+<dialog id="product-dialog" aria-labelledby="product-name"><button id="product-close" class="close-button" aria-label="Məhsulu bağla"><svg class="icon"><use href="#i-close"/></svg></button><div id="product-photo"></div><div class="product-dialog-body"><span id="product-category" class="label"></span><h2 id="product-name"></h2><p id="product-description"></p><strong id="product-price"></strong><p id="product-sample" class="sample-caption">Nümunə məhsul · qiymət və şəkil şərtidir.</p></div></dialog>
+<div id="load-error" class="toast" role="alert" hidden></div>
+</body>
+</html>

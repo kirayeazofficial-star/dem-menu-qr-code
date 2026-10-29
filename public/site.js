@@ -1,13 +1,173 @@
-const $=id=>document.getElementById(id);
-let settings, active='all';
-function text(id,value){$(id).textContent=value||'';}
-function render(){const query=$('search').value.trim().toLocaleLowerCase('az');const items=settings.items.filter(i=>i.available&&(active==='all'||i.category===active)&&`${i.name} ${i.description}`.toLocaleLowerCase('az').includes(query));$('items').replaceChildren();if(!items.length){const p=document.createElement('p');p.className='empty';p.textContent=query?'Axtarışa uyğun məhsul tapılmadı.':settings.items.some(i=>i.available)?'Bu kateqoriyada hələ məhsul yoxdur.':'Menyumuz tezliklə burada olacaq. Məlumat üçün bizimlə əlaqə saxlayın.';$('items').append(p);return;}for(const item of items){const card=document.createElement('article');card.className='menu-card';const category=document.createElement('span');category.className='eyebrow';category.textContent=settings.categories.find(c=>c.id===item.category)?.name;const title=document.createElement('h3');title.textContent=item.name;const description=document.createElement('p');description.textContent=item.description;const price=document.createElement('strong');price.className='price';price.textContent=`${item.price.toLocaleString('az-AZ',{minimumFractionDigits:2,maximumFractionDigits:2})} ${settings.currency}`;if(item.image){const img=document.createElement('img');img.src=item.image;img.alt=item.name;img.loading='lazy';img.className='dish-image';card.append(img);}else if(settings.sampleMenu&&Number.isInteger(item.samplePhoto)){const photo=document.createElement('div');photo.className='sample-dish sample-dish-'+item.samplePhoto;photo.setAttribute('role','img');photo.setAttribute('aria-label',item.name+' — illüstrativ nümunə şəkli');card.append(photo);}const content=document.createElement('div');content.className='dish-content';content.append(category,title,description,price);const details=document.createElement('button');details.type='button';details.className='product-details';details.textContent='Ətraflı ↗';details.setAttribute('aria-label',item.name+' haqqında ətraflı');details.onclick=()=>openProduct(item);content.append(details);card.append(content);$('items').append(card);}}
-async function load(){try{const response=await fetch('/api/settings');if(!response.ok)throw Error();settings=await response.json();document.title=`${settings.name} · Menyu`;$('sample-notice').hidden=!settings.sampleMenu;for(const [id,key] of [['venue-name','name'],['tagline','tagline'],['description','description'],['hero-address','address'],['hero-hours','hours'],['contact-address','address'],['contact-hours','hours'],['contact-phone','phone']])text(id,settings[key]);if(settings.profileImage){$('profile').src=settings.profileImage;$('profile').hidden=false;$('fallback-brand').hidden=true;}if(settings.coverImage){$('hero-photo').src=settings.coverImage;$('photo-caption').hidden=true;}$('contact-phone').href=`tel:${settings.phone.replace(/[^+\d]/g,'')}`;text('inline-wifi-name',settings.wifiName||'Heyətimizdən soruşun');text('inline-wifi-password',settings.wifiPassword||'Heyətimizdən soruşun');$('inline-copy').hidden=!settings.wifiPassword;text('info-hours',settings.hours||'İş saatları üçün bizimlə əlaqə saxlayın.');text('info-address',settings.address);text('info-phone',settings.phone);$('info-phone').href=`tel:${settings.phone.replace(/[^+\d]/g,'')}`;$('info-map').hidden=!settings.address&&!settings.mapUrl;$('info-map').href=settings.mapUrl||`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(settings.address)}`;if(settings.phone){$('call-link').hidden=false;$('call-link').href=$('contact-phone').href;$('whatsapp-link').hidden=false;let digits=settings.phone.replace(/\D/g,'');if(digits.startsWith('0'))digits='994'+digits.slice(1);$('whatsapp-link').href=`https://wa.me/${digits}`;}if(settings.mapUrl||settings.address){$('map-link').hidden=false;$('map-link').href=settings.mapUrl||`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(settings.address)}`;}if(settings.instagram){$('instagram').href=settings.instagram;$('instagram').hidden=false;}if(settings.tiktok){$('tiktok').href=settings.tiktok;$('tiktok').hidden=false;}else{$('tiktok').hidden=true;}$('categories').replaceChildren();for(const cat of [{id:'all',name:'Hamısı'},...settings.categories]){const button=document.createElement('button');button.textContent=cat.name;button.className=cat.id===active?'active':'';const example=settings.items.find(i=>i.category===cat.id&&i.available&&(i.image||Number.isInteger(i.samplePhoto)));if(example){const thumb=document.createElement('span');thumb.className=example.image?'category-thumb':'category-thumb sample-dish sample-dish-'+example.samplePhoto;thumb.setAttribute('aria-hidden','true');if(example.image){const img=document.createElement('img');img.src=example.image;img.alt='';img.loading='lazy';thumb.append(img);}button.prepend(thumb);}button.setAttribute('aria-pressed',cat.id===active);button.onclick=()=>{active=cat.id;for(const b of $('categories').children){b.classList.toggle('active',b===button);b.setAttribute('aria-pressed',b===button);}render();};$('categories').append(button);}render();}catch{$('items').textContent='Menyu yüklənmədi. Səhifəni yeniləyin.';$('load-error').hidden=false;$('load-error').textContent='Serverlə əlaqə qurulmadı. Yenidən yoxlayın.';}}
-$('search').addEventListener('input',()=>settings&&render());$('wifi-open').onclick=()=>{if(!settings)return;text('wifi-name',settings.wifiName||'Hələ qeyd edilməyib');text('wifi-password',settings.wifiPassword||'Heyətimizdən soruşun');text('wifi-status',settings.wifiName?'Şəbəkəni seç və şifrəni daxil et.':'Wi-Fi məlumatları üçün heyətimizə müraciət edin.');$('wifi-copy').hidden=!settings.wifiPassword;text('copy-status','');$('wifi-dialog').showModal();};$('wifi-close').onclick=()=>$('wifi-dialog').close();$('wifi-copy').onclick=async()=>{try{await navigator.clipboard.writeText(settings.wifiPassword);text('copy-status','Şifrə kopyalandı.');}catch{text('copy-status','Şifrəni seçərək əl ilə kopyalaya bilərsiniz.');}};load();
+const $ = id => document.getElementById(id);
+let settings;
+let activeCategory = 'all';
 
-$('mobile-wifi').onclick=()=>$('wifi-open').click();
-
-$('inline-copy').onclick=async()=>{try{await navigator.clipboard.writeText(settings.wifiPassword);text('inline-copy-status','Şifrə kopyalandı.');}catch{text('inline-copy-status','Şifrəni seçərək əl ilə kopyalaya bilərsən.');}};
-
-function openProduct(item){text('product-name',item.name);text('product-description',item.description);text('product-category',settings.categories.find(c=>c.id===item.category)?.name);text('product-price',`${item.price.toLocaleString('az-AZ',{minimumFractionDigits:2,maximumFractionDigits:2})} ${settings.currency}`);$('product-sample').hidden=!settings.sampleMenu;const photo=$('product-photo');photo.replaceChildren();if(item.image){const img=document.createElement('img');img.src=item.image;img.alt=item.name;photo.append(img);}else if(settings.sampleMenu&&Number.isInteger(item.samplePhoto)){const image=document.createElement('div');image.className='sample-dish sample-dish-'+item.samplePhoto;image.setAttribute('role','img');image.setAttribute('aria-label',item.name+' — nümunə şəkli');photo.append(image);}$('product-dialog').showModal();}
-$('product-close').onclick=()=>$('product-dialog').close();
+function setText(id, value) { $(id).textContent = value || ''; }
+function formatPrice(price) {
+  return price.toLocaleString('az-AZ', {
+    minimumFractionDigits: Number.isInteger(price) ? 0 : 2,
+    maximumFractionDigits: 2
+  });
+}
+function photograph(item) {
+  if (item.image) {
+    const img = document.createElement('img');
+    img.src = item.image;
+    img.alt = item.name;
+    img.loading = 'lazy';
+    img.className = 'dish-image';
+    return img;
+  }
+  if (settings.sampleMenu && Number.isInteger(item.samplePhoto)) {
+    const image = document.createElement('div');
+    image.className = `sample-dish sample-dish-${item.samplePhoto}`;
+    image.setAttribute('role', 'img');
+    image.setAttribute('aria-label', `${item.name} — nümunə şəkli`);
+    return image;
+  }
+  const empty = document.createElement('div');
+  empty.className = 'dish-no-photo';
+  empty.textContent = 'Dəm';
+  empty.setAttribute('aria-hidden', 'true');
+  return empty;
+}
+function openProduct(item) {
+  $('product-photo').replaceChildren(photograph(item));
+  setText('product-category', settings.categories.find(c => c.id === item.category)?.name);
+  setText('product-name', item.name);
+  setText('product-description', item.description);
+  setText('product-price', `${formatPrice(item.price)} ${settings.currency}`);
+  $('product-sample').hidden = !settings.sampleMenu;
+  $('product-dialog').showModal();
+}
+function renderItems() {
+  const query = $('search').value.trim().toLocaleLowerCase('az');
+  const items = settings.items.filter(item => item.available
+    && (activeCategory === 'all' || item.category === activeCategory)
+    && `${item.name} ${item.description}`.toLocaleLowerCase('az').includes(query));
+  setText('category-title', query ? 'Axtarış nəticələri'
+    : activeCategory === 'all' ? 'Bütün məhsullar'
+    : settings.categories.find(c => c.id === activeCategory)?.name);
+  setText('result-count', `${items.length} məhsul`);
+  $('items').replaceChildren();
+  if (!items.length) {
+    const empty = document.createElement('p');
+    empty.className = 'empty';
+    empty.textContent = query ? 'Məhsul tapılmadı. Başqa adla axtarın.' : 'Bu bölmədə hələ məhsul yoxdur.';
+    $('items').append(empty);
+    return;
+  }
+  for (const item of items) {
+    const article = document.createElement('article');
+    article.className = 'menu-card';
+    const photoButton = document.createElement('button');
+    photoButton.type = 'button';
+    photoButton.className = 'dish-button';
+    photoButton.setAttribute('aria-label', `${item.name} haqqında ətraflı`);
+    photoButton.onclick = () => openProduct(item);
+    photoButton.append(photograph(item));
+    const body = document.createElement('div');
+    body.className = 'dish-body';
+    const name = document.createElement('h4');
+    name.className = 'dish-name';
+    name.textContent = item.name;
+    const description = document.createElement('p');
+    description.className = 'dish-description';
+    description.textContent = item.description;
+    const price = document.createElement('strong');
+    price.className = 'dish-price';
+    price.textContent = formatPrice(item.price);
+    const currency = document.createElement('small');
+    currency.textContent = settings.currency;
+    price.append(currency);
+    body.append(name, description, price);
+    article.append(photoButton, body);
+    $('items').append(article);
+  }
+}
+function renderCategories() {
+  $('categories').replaceChildren();
+  for (const category of [{ id: 'all', name: 'Hamısı' }, ...settings.categories]) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = category.name;
+    button.classList.toggle('active', category.id === activeCategory);
+    button.setAttribute('aria-pressed', String(category.id === activeCategory));
+    button.onclick = () => {
+      activeCategory = category.id;
+      for (const sibling of $('categories').children) {
+        const selected = sibling === button;
+        sibling.classList.toggle('active', selected);
+        sibling.setAttribute('aria-pressed', String(selected));
+      }
+      renderItems();
+    };
+    $('categories').append(button);
+  }
+}
+async function load() {
+  try {
+    const response = await fetch('/api/settings');
+    if (!response.ok) throw new Error('Settings unavailable');
+    settings = await response.json();
+    document.title = `${settings.name} · Menyu`;
+    setText('venue-name', settings.name);
+    setText('header-address', settings.address);
+    setText('tagline', settings.tagline);
+    $('tagline').hidden = !settings.tagline;
+    $('sample-notice').hidden = !settings.sampleMenu;
+    $('illustration-note').hidden = !settings.sampleMenu;
+    if (settings.profileImage) {
+      $('profile').src = settings.profileImage;
+      $('profile').hidden = false;
+      $('fallback-brand').hidden = true;
+    }
+    if (settings.coverImage) {
+      $('hero-photo').src = settings.coverImage;
+      $('hero-photo').alt = `${settings.name} üz qabığı`;
+      $('photo-caption').hidden = true;
+    }
+    setText('info-address', settings.address);
+    $('info-map').hidden = !settings.address && !settings.mapUrl;
+    $('info-map').href = settings.mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(settings.address)}`;
+    setText('contact-phone', settings.phone || 'Telefon qeyd edilməyib');
+    if (settings.phone) {
+      $('contact-phone').href = `tel:${settings.phone.replace(/[^+\d]/g, '')}`;
+      let digits = settings.phone.replace(/\D/g, '');
+      if (digits.startsWith('0')) digits = '994' + digits.slice(1);
+      $('whatsapp-link').href = `https://wa.me/${digits}`;
+      $('whatsapp-link').hidden = false;
+    }
+    setText('info-hours', settings.hours || 'Məlumat üçün bizimlə əlaqə saxlayın.');
+    for (const network of ['instagram', 'tiktok']) {
+      $(network).hidden = !settings[network];
+      if (settings[network]) $(network).href = settings[network];
+    }
+    renderCategories();
+    renderItems();
+  } catch {
+    $('items').textContent = 'Menyu yüklənmədi. Səhifəni yeniləyin.';
+    $('load-error').hidden = false;
+    setText('load-error', 'Serverlə əlaqə qurulmadı. Bir az sonra yenidən yoxlayın.');
+  }
+}
+$('search').addEventListener('input', () => settings && renderItems());
+$('wifi-open').onclick = () => {
+  if (!settings) return;
+  setText('wifi-name', settings.wifiName || 'Heyətimizdən soruşun');
+  setText('wifi-password', settings.wifiPassword || 'Heyətimizdən soruşun');
+  $('wifi-copy').hidden = !settings.wifiPassword;
+  setText('copy-status', '');
+  $('wifi-dialog').showModal();
+};
+$('wifi-close').onclick = () => $('wifi-dialog').close();
+$('product-close').onclick = () => $('product-dialog').close();
+$('wifi-copy').onclick = async () => {
+  try {
+    await navigator.clipboard.writeText(settings.wifiPassword);
+    setText('copy-status', 'Şifrə kopyalandı.');
+  } catch {
+    setText('copy-status', 'Şifrəni seçərək əl ilə kopyalaya bilərsiniz.');
+  }
+};
+load();
