@@ -68,7 +68,7 @@ Admin sessiyası 8 saatdır; cookie HttpOnly və SameSite=Strict parametrləri i
 
 ## Şəkillər və xəritə
 
-Menyu şəkilləri və pub atmosferi üçün yaradılmış şəkillər layihənin `public/assets/` qovluğundadır. Yeni build `public/sample-menu.json` faylını açıq nümunə məlumatları ilə yaradır. API əlçatan olmayanda müştəri səhifəsi yalnız aydın işarələnmiş nümunə menyu göstərir; bu, bazanın və admin panelinin hazır olması demək deyil. Heç bir admin məlumatı və Wi-Fi şifrəsi bu statik fayla köçürülmür.
+Menyu şəkilləri və pub atmosferi üçün yaradılmış şəkillər layihənin `public/assets/` qovluğundadır. Yeni build `public/sample-menu.json` faylını açıq nümunə məlumatları ilə yaradır. API əlçatan olmayanda müştəri səhifəsi yalnız aydın işarələnmiş nümunə menyu göstərir; bu, bazanın və admin panelinin hazır olması demək deyil. Admin məlumatları statik fayla köçürülmür. Sahibin açıq göstərilməsini istədiyi qonaq Wi-Fi məlumatları nümunə faylda da yer alır.
 
 Xəritə paneli adminin daxil etdiyi ünvan üzrə Google Maps axtarışını açır. Dəqiq məkan pinini seçmək üçün xəritə keçidini paneldə qeyd edin; “Xəritədə aç” həmin keçiddən istifadə edir. Daxili xəritə istifadəçi “Google xəritəsini göstər” düyməsinə basanda yüklənir; Google xidmətinə brauzerdən giriş tələb olunur. Xəritə rəsmlərinin xarici şəbəkədə yüklənməsi lokal avtomatik testlərlə təsdiqlənməyib.
 
@@ -83,3 +83,11 @@ Nümunə menyuya qəlyan–çay, dostlar və çay süfrəsi setləri əlavə olu
 Dəm RestoPub: Buzovna, Zuğulba 24 B; +994 70 686 12 11; WhatsApp eyni nömrədədir; TikTok `@cahanhsv`. Birbaşa zəng, WhatsApp və xəritə keçidləri üz qabığının altında göstərilir və paneldən dəyişən məlumatları izləyir. Məkan məlumatları aşağıda ilkin olaraq açıqdır. Mövcud yüklənmiş loqo və profil şəkli dəyişdirilmir.
 
 Nümunə kataloq 12 məhsula qədər genişləndirilib: meyvə tabağı, naqqets–fri və saçaq pendir–noxud əlavə olunub. Bunların qiymət və şəkilləri təsdiqlənmiş real təklif deyil. Əlavələr nümunə rejimində bir dəfə tətbiq olunur, həqiqi menyu və mövcud redaktələr əvəz edilmir.
+
+## İş saatı və rezerv sorğusu
+
+Sahibin təyin etdiyi ilkin iş saatı 18:00–01:00, qonaq Wi-Fi adı Dəm RestoPub, qonaq şifrəsi isə 12345-dir. Bu qonaq şifrəsi admin şifrəsi deyil. Dəyərlər bir dəfə yenilənir, sonrakı panel redaktələri saxlanır.
+
+Masa rezervi forması ad, təqvim tarixi, Bakı vaxtı ilə saat, qonaq sayı və istəyə görə qeyd toplayır. Keçmiş vaxtlar qəbul edilmir. Forma yalnız WhatsApp-da əvvəlcədən hazırlanmış sorğu açır; mesajı istifadəçi göndərir. Rezervlər tətbiq bazasında saxlanmır və avtomatik təsdiqlənmir. Telefon nömrəsi paneldə dəyişəndə rezerv sorğusunun ünvanı da dəyişir.
+
+Admin paneli saytın `/admin` yolundadır; giriş üçün Vercel-də ilkin olaraq `DEM_ADMIN_PASSWORD` kimi təyin olunan şifrə istifadə edilir.

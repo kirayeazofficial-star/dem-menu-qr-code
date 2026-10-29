@@ -7,6 +7,7 @@ function concealWifi(){clearTimeout(wifiRevealTimer);setText('visible-wifi-passw
 function closeWifi(){ $('wifi-dialog').close();concealWifi(); }
 
 function setText(id, value) { $(id).textContent = value || ''; }
+function displayPhone(value){const d=value.replace(/\D/g,'');const local=d.startsWith('994')&&d.length===12?'0'+d.slice(3):d;return local.length===10&&local.startsWith('0')?`${local.slice(0,3)} ${local.slice(3,6)} ${local.slice(6,8)} ${local.slice(8)}`:value;}
 function formatPrice(price) {
   return price.toLocaleString('az-AZ', {
     minimumFractionDigits: Number.isInteger(price) ? 0 : 2,
@@ -138,7 +139,7 @@ async function load() {
     setText('quick-address',settings.address);
     $('quick-map').hidden=!settings.address&&!settings.mapUrl;
     $('quick-map').href=settings.mapUrl||`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(settings.name+' '+settings.address)}`;
-    setText('quick-phone',settings.phone);
+    setText('quick-phone',displayPhone(settings.phone));
     $('quick-call').hidden=!settings.phone;
     $('quick-whatsapp').hidden=!settings.phone;
     setText('tagline', settings.tagline);
@@ -165,10 +166,11 @@ async function load() {
     $('map-external').href=settings.mapUrl||`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(settings.name+' '+settings.address)}`;
     $('info-map').hidden = !settings.address && !settings.mapUrl;
     $('info-map').href = settings.mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(settings.address)}`;
-    setText('contact-phone', settings.phone || 'Telefon qeyd edilməyib');
+    setText('contact-phone', settings.phone?displayPhone(settings.phone):'Telefon qeyd edilməyib');
     if (settings.phone) {
       $('contact-phone').href = `tel:${settings.phone.replace(/[^+\d]/g, '')}`;
       $('quick-call').href=$('contact-phone').href;
+      $('header-contact').href=$('contact-phone').href;
       let digits = settings.phone.replace(/\D/g, '');
       if (digits.startsWith('0')) digits = '994' + digits.slice(1);
       $('whatsapp-link').href = `https://wa.me/${digits}`;
@@ -176,10 +178,7 @@ async function load() {
       $('whatsapp-link').hidden = false;
     }
     setText('info-hours', settings.hours || 'Məlumat üçün bizimlə əlaqə saxlayın.');
-    for (const network of ['instagram', 'tiktok']) {
-      $(network).hidden = !settings[network];
-      if (settings[network]) $(network).href = settings[network];
-    }
+
     renderCategories();
     renderItems();
   } catch {
@@ -230,3 +229,24 @@ $('load-map').onclick=()=>{const frame=$('venue-map');if(!frame.dataset.src)retu
 
 $('wifi-reveal').onclick=()=>{if(!settings?.wifiPassword)return;if($('wifi-reveal').textContent==='Gizlət'){concealWifi();return;}setText('visible-wifi-password',settings.wifiPassword);setText('wifi-reveal','Gizlət');clearTimeout(wifiRevealTimer);wifiRevealTimer=setTimeout(concealWifi,15000);};
 document.addEventListener('visibilitychange',()=>{if(document.hidden){concealWifi();if($('wifi-dialog').open)closeWifi();}});
+
+function openReservation(){
+  if(!settings?.phone){setText('visible-copy-status','Rezerv üçün telefon məlumatı hazır deyil.');return;}
+  const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Baku',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+  $('reserve-date').min=today;
+  if(!$('reserve-date').value)$('reserve-date').value=today;
+  setText('reserve-status','');$('reservation-dialog').showModal();
+}
+for(let minutes=18*60;minutes<25*60;minutes+=30){const hour=Math.floor(minutes/60)%24;const value=String(hour).padStart(2,'0')+':'+String(minutes%60).padStart(2,'0');const option=document.createElement('option');option.value=value;option.textContent=value;$('reserve-time').append(option);}
+for(let n=1;n<=20;n++){const option=document.createElement('option');option.value=n;option.textContent=n+' nəfər';option.selected=n===2;$('reserve-guests').append(option);}
+$('reserve-open').onclick=openReservation;$('reserve-banner').onclick=openReservation;
+$('reserve-close').onclick=()=>$('reservation-dialog').close();
+$('reservation-form').onsubmit=event=>{
+  event.preventDefault();
+  const date=$('reserve-date').value,time=$('reserve-time').value;
+  if(new Date(date+'T'+time+':00+04:00').getTime()<=Date.now()){setText('reserve-status','Gələcək tarix və saat seçin.');return;}
+  let phone=settings.phone.replace(/\D/g,'');if(phone.startsWith('0'))phone='994'+phone.slice(1);
+  const message=['Salam, '+settings.name+' üçün masa rezervi sorğusu göndərirəm.','Ad: '+$('reserve-name').value.trim(),'Tarix: '+date.split('-').reverse().join('.'),'Saat: '+time+' (Bakı vaxtı)','Qonaq sayı: '+$('reserve-guests').value,...($('reserve-note').value.trim()?['Qeyd: '+$('reserve-note').value.trim()]:[]),'Zəhmət olmasa, mövcudluğu təsdiqləyin.'].join('\n');
+  window.open('https://wa.me/'+phone+'?text='+encodeURIComponent(message),'_blank','noopener,noreferrer');
+  $('reservation-dialog').close();
+};

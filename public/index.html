@@ -26,7 +26,7 @@
       <span class="logo-frame"><img id="profile" alt="Dəm loqosu" hidden><span id="fallback-brand" class="classic-logo"><img src="/flame.svg" alt=""><strong>DƏM</strong><small>RESTOPUB</small></span></span>
       <span class="brand-text"><h1 id="venue-name">Dəm RestoPub</h1><span id="header-address">Buzovna, Zuğulba 24 B</span></span>
     </a>
-    <a class="utility-button" href="#contact"><svg class="icon"><use href="#i-phone"/></svg><span>Əlaqə</span></a>
+    <a id="header-contact" class="utility-button" href="tel:+994706861211"><svg class="icon"><use href="#i-phone"/></svg><span>Əlaqə</span></a>
   </header>
 
   <section class="wifi-strip" aria-label="Wi-Fi bağlantısı">
@@ -43,7 +43,8 @@
     <span id="photo-caption" class="photo-caption">İllüstrativ şəkil</span>
   </section>
 
-  <section class="contact-rail" aria-label="Məkanla əlaqə"><a id="quick-call" class="rail-item" href="tel:+994706861211"><svg class="icon"><use href="#i-phone"/></svg><span><small>Zəng et</small><strong id="quick-phone">070 686 12 11</strong></span></a><a id="quick-whatsapp" class="rail-item whatsapp-item" href="https://wa.me/994706861211" target="_blank" rel="noopener"><svg class="icon"><use href="#i-chat"/></svg><span><small>WhatsApp</small><strong>Bizə yaz</strong></span></a><a id="quick-map" class="rail-item" href="https://www.google.com/maps/search/?api=1&amp;query=Buzovna%20Zu%C4%9Fulba%2024%20B" target="_blank" rel="noopener"><svg class="icon"><use href="#i-pin"/></svg><span><small>Ünvan</small><strong id="quick-address">Buzovna, Zuğulba 24 B</strong></span></a></section>
+  <section class="contact-rail" aria-label="Məkanla əlaqə"><a id="quick-call" class="rail-item" href="tel:+994706861211"><svg class="icon"><use href="#i-phone"/></svg><span><small>Zəng et</small><strong id="quick-phone">070 686 12 11</strong></span></a><a id="quick-whatsapp" class="rail-item whatsapp-item" href="https://wa.me/994706861211" target="_blank" rel="noopener"><svg class="icon"><use href="#i-chat"/></svg><span><small>WhatsApp</small><strong>Aktivdir</strong></span></a><a id="quick-map" class="rail-item" href="https://www.google.com/maps/search/?api=1&amp;query=Buzovna%20Zu%C4%9Fulba%2024%20B" target="_blank" rel="noopener"><svg class="icon"><use href="#i-pin"/></svg><span><small>Ünvan</small><strong id="quick-address">Buzovna, Zuğulba 24 B</strong></span></a></section>
+  <section class="reservation-banner"><div><strong>Masa rezervi</strong><span>Tarix və qonaq sayını seç, WhatsApp-da dəqiqləşdirək.</span></div><button id="reserve-banner" class="reserve-button">Rezerv sorğusu <svg class="icon"><use href="#i-arrow"/></svg></button></section>
   <main id="menu">
     <div class="menu-toolbar"><div><h2>Menyu</h2><p id="sample-notice" hidden>Nümunə menyu <span>· Qiymətlər şərtidir</span></p></div><label class="search-box"><svg class="icon"><use href="#i-search"/></svg><input id="search" type="search" placeholder="Məhsul axtar" aria-label="Menyuda axtar"></label></div>
     <nav id="categories" class="categories" aria-label="Menyu kateqoriyaları"></nav>
@@ -57,19 +58,20 @@
     <details open><summary>Əlaqə və məkan məlumatları <svg class="icon"><use href="#i-chevron"/></svg></summary>
       <div class="details-content">
         <div class="contact-block"><span class="label">Ünvan</span><p id="info-address"></p><a id="info-map" class="text-link" target="_blank" rel="noopener">Xəritədə aç <svg class="icon"><use href="#i-arrow"/></svg></a></div>
-        <div class="contact-block"><span class="label">Telefon</span><a id="contact-phone" class="contact-number"></a><a id="whatsapp-link" class="text-link" target="_blank" rel="noopener" hidden>WhatsApp <svg class="icon"><use href="#i-arrow"/></svg></a></div>
+        <div class="contact-block"><span class="label">Telefon</span><a id="contact-phone" class="contact-number"></a><a id="whatsapp-link" class="text-link" target="_blank" rel="noopener" hidden>WhatsApp aktivdir <svg class="icon"><use href="#i-arrow"/></svg></a></div>
         <div class="contact-block"><span class="label">İş saatları</span><p id="info-hours">Məlumat üçün bizimlə əlaqə saxlayın.</p></div>
-        <div class="contact-block"><span class="label">Sosial şəbəkələr</span><div class="social-links"><a id="instagram" target="_blank" rel="noopener" hidden>Instagram</a><a id="tiktok" target="_blank" rel="noopener" hidden>TikTok</a></div></div>
+
       </div>
     </details>
   </section>
   <section id="map-section" class="map-section" aria-labelledby="map-title"><div class="section-label"><h2 id="map-title">Bizi burada tap</h2><a id="map-external" class="text-link" target="_blank" rel="noopener">Xəritədə aç <svg class="icon"><use href="#i-arrow"/></svg></a></div><p id="map-address" class="map-address"></p><div id="map-placeholder" class="map-placeholder"><svg class="icon"><use href="#i-pin"/></svg><span id="map-placeholder-address">Buzovna, Zuğulba 24 B</span><button id="load-map" class="utility-button">Google xəritəsini göstər</button></div><iframe hidden id="venue-map" title="Dəm RestoPub ünvanının Google xəritəsində axtarışı" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></section>
-  <nav class="bottom-nav" aria-label="Sürətli keçidlər"><a href="#menu"><svg class="icon"><use href="#i-search"/></svg>Menyu</a><button id="bottom-wifi"><svg class="icon"><use href="#i-wifi"/></svg>Wi-Fi</button><a href="#map-section"><svg class="icon"><use href="#i-pin"/></svg>Xəritə</a><a href="#contact"><svg class="icon"><use href="#i-phone"/></svg>Əlaqə</a></nav>
+  <nav class="bottom-nav" aria-label="Sürətli keçidlər"><a href="#menu"><svg class="icon"><use href="#i-search"/></svg>Menyu</a><button id="bottom-wifi"><svg class="icon"><use href="#i-wifi"/></svg>Wi-Fi</button><a href="#map-section"><svg class="icon"><use href="#i-pin"/></svg>Xəritə</a><button id="reserve-open"><svg class="icon"><use href="#i-chat"/></svg>Rezerv</button></nav>
   <footer><span>Dəm RestoPub</span><a href="/admin">İdarəetmə</a></footer>
 </div>
 
 <dialog id="wifi-dialog" aria-labelledby="wifi-title"><button id="wifi-close" class="close-button" aria-label="Bağla"><svg class="icon"><use href="#i-close"/></svg></button><svg class="dialog-symbol icon"><use href="#i-wifi"/></svg><h2 id="wifi-title">Wi-Fi məlumatları</h2><dl class="wifi-data"><div><dt>Şəbəkə</dt><dd id="wifi-name"></dd></div><div><dt>Şifrə</dt><dd id="wifi-password"></dd></div></dl><button class="primary-button" id="wifi-copy"><svg class="icon"><use href="#i-copy"/></svg>Şifrəni kopyala</button><p id="copy-status" role="status"></p></dialog>
 <dialog id="product-dialog" aria-labelledby="product-name"><button id="product-close" class="close-button" aria-label="Məhsulu bağla"><svg class="icon"><use href="#i-close"/></svg></button><div id="product-photo"></div><div class="product-dialog-body"><span id="product-category" class="label"></span><h2 id="product-name"></h2><p id="product-description"></p><strong id="product-price"></strong><p id="product-sample" class="sample-caption">Nümunə məhsul · qiymət və şəkil şərtidir.</p></div></dialog>
+<dialog id="reservation-dialog" aria-labelledby="reservation-title"><button id="reserve-close" class="close-button" aria-label="Rezerv pəncərəsini bağla"><svg class="icon"><use href="#i-close"/></svg></button><h2 id="reservation-title">Masa rezervi</h2><p class="reservation-note">Sorğun WhatsApp-da açılacaq. Rezerv yalnız məkanın cavabından sonra təsdiqlənir.</p><form id="reservation-form"><label>Adın<input id="reserve-name" autocomplete="given-name" required maxlength="80" placeholder="Adınızı daxil edin"></label><div class="reservation-fields"><label>Tarix<input id="reserve-date" type="date" required></label><label>Saat<select id="reserve-time" required><option value="">Saat seçin</option></select></label></div><label>Qonaq sayı<select id="reserve-guests" required></select></label><label>Əlavə qeyd <span>(istəyə görə)</span><textarea id="reserve-note" maxlength="500" rows="2" placeholder="Məsələn, sakit masa istəyirəm"></textarea></label><p class="reservation-note">İş saatı: 18:00–01:00 · Bakı vaxtı</p><button class="primary-button" type="submit">WhatsApp-da sorğu göndər</button><p id="reserve-status" role="status"></p></form></dialog>
 <div id="load-error" class="toast" role="alert" hidden></div>
 </body>
 </html>
