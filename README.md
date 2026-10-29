@@ -30,6 +30,8 @@ Dəyişikliklərin saytda görünməsi üçün **Dəyişiklikləri yadda saxla**
 
 Vercel konfiqurasiyası `vercel.json` faylındadır. Sayt statik fayllarla, API isə `api/index.js` serverless funksiyası ilə işləyir. Vercel-in müvəqqəti diskinə məlumat yazılmır: menyu, şəkillər, sessiyalar və giriş cəhdləri Turso/libSQL bazasında saxlanır. Tək bazanın istifadəsi ayrıca şəkil saxlama xidmətinə ehtiyacı aradan qaldırır. Şəkillər PNG, JPG və WebP, ən çox 3 MB olmalıdır.
 
+Vercel Storage qoşulma pəncərəsində prefiks kimi `TURSO` seçilərsə, yaranan `TURSO_URL` da qəbul olunur; `TURSO_DATABASE_URL` ilə eyni məqsəd daşıyır.
+
 1. Turso-da verilənlər bazası yaradın və onun HTTPS/libSQL ünvanını və auth tokenini əldə edin. Mövcud Turso bazası da istifadə oluna bilər.
 2. Vercel layihəsində **Settings → Environment Variables** bölməsinə bunları təhlükəsiz şəkildə daxil edin:
    - `TURSO_DATABASE_URL`: bazanın ünvanı.
