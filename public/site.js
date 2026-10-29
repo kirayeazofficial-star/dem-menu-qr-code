@@ -22,6 +22,9 @@ function photograph(item) {
     img.className = 'dish-image';
     return img;
   }
+  if (settings.sampleMenu && Number.isInteger(item.sampleExtraPhoto)) {
+    const image=document.createElement('div');image.className=`sample-extra sample-extra-${item.sampleExtraPhoto}`;image.setAttribute('role','img');image.setAttribute('aria-label',`${item.name} — nümunə şəkli`);return image;
+  }
   if (settings.sampleMenu && Number.isInteger(item.sampleSetPhoto)) {
     const image=document.createElement('div');image.className=`sample-set sample-set-${item.sampleSetPhoto}`;image.setAttribute('role','img');image.setAttribute('aria-label',`${item.name} — nümunə şəkli`);return image;
   }
@@ -132,6 +135,12 @@ async function load() {
     document.title = `${settings.name} · Menyu`;
     setText('venue-name', settings.name);
     setText('header-address', settings.address);
+    setText('quick-address',settings.address);
+    $('quick-map').hidden=!settings.address&&!settings.mapUrl;
+    $('quick-map').href=settings.mapUrl||`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(settings.name+' '+settings.address)}`;
+    setText('quick-phone',settings.phone);
+    $('quick-call').hidden=!settings.phone;
+    $('quick-whatsapp').hidden=!settings.phone;
     setText('tagline', settings.tagline);
     $('tagline').hidden = !settings.tagline;
     $('sample-notice').hidden = !settings.sampleMenu;
@@ -159,9 +168,11 @@ async function load() {
     setText('contact-phone', settings.phone || 'Telefon qeyd edilməyib');
     if (settings.phone) {
       $('contact-phone').href = `tel:${settings.phone.replace(/[^+\d]/g, '')}`;
+      $('quick-call').href=$('contact-phone').href;
       let digits = settings.phone.replace(/\D/g, '');
       if (digits.startsWith('0')) digits = '994' + digits.slice(1);
       $('whatsapp-link').href = `https://wa.me/${digits}`;
+      $('quick-whatsapp').href=$('whatsapp-link').href;
       $('whatsapp-link').hidden = false;
     }
     setText('info-hours', settings.hours || 'Məlumat üçün bizimlə əlaqə saxlayın.');

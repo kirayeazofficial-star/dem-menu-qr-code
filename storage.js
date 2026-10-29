@@ -29,5 +29,17 @@ if(!await db.prepare('SELECT name FROM migrations WHERE name=?').get('sample-set
     if(update.rowsAffected)await db.prepare('INSERT OR IGNORE INTO migrations VALUES (?)').run('sample-sets-v1');
   }else{await db.prepare('INSERT OR IGNORE INTO migrations VALUES (?)').run('sample-sets-v1');}
 }
+// Add screenshot-inspired sample items once without replacing existing menu edits.
+if(!await db.prepare('SELECT name FROM migrations WHERE name=?').get('sample-extras-v1')){
+  const row=await db.prepare('SELECT value FROM settings WHERE id=1').get();
+  const saved=JSON.parse(row.value);
+  if(saved.sampleMenu===true){
+    const added=sampleItems.filter(item=>Number.isInteger(item.sampleExtraPhoto)&&!saved.items.some(old=>old.id===item.id));
+    const categories=sampleCategories.filter(cat=>cat.id==='fruit'&&!saved.categories.some(old=>old.id===cat.id));
+    saved.items=[...saved.items,...added];saved.categories=[...saved.categories,...categories];
+    const result=await db.prepare('UPDATE settings SET value=? WHERE id=1 AND value=?').run(JSON.stringify(saved),row.value);
+    if(result.rowsAffected)await db.prepare('INSERT OR IGNORE INTO migrations VALUES (?)').run('sample-extras-v1');
+  }else{await db.prepare('INSERT OR IGNORE INTO migrations VALUES (?)').run('sample-extras-v1');}
+}
 if(process.env.DEM_ADMIN_PASSWORD){if(process.env.DEM_ADMIN_PASSWORD.length<12)throw new Error('DEM_ADMIN_PASSWORD must contain at least 12 characters');await db.prepare('INSERT OR IGNORE INTO admin VALUES (1, ?)').run(hashPassword(process.env.DEM_ADMIN_PASSWORD));}
 export async function getSettings(){const row=await db.prepare('SELECT value FROM settings WHERE id=1').get();return {...defaults,...JSON.parse(row.value)};}

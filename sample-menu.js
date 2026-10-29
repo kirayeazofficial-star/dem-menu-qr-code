@@ -1,5 +1,5 @@
 // Illustrative menu only. The owner must replace items/prices before presenting a real menu.
-export const sampleCategories=[{id:'sets',name:'Setlər'},{id:'hookah',name:'Qəlyan'},{id:'beer',name:'Pivələr'},{id:'snacks',name:'Qəlyanaltılar'},{id:'burgers',name:'Burgerlər'},{id:'pizza',name:'Pizzalar'},{id:'tea',name:'Çay & içkilər'}];
+export const sampleCategories=[{id:'sets',name:'Setlər'},{id:'hookah',name:'Qəlyan'},{id:'beer',name:'Pivələr'},{id:'snacks',name:'Qəlyanaltılar'},{id:'burgers',name:'Burgerlər'},{id:'pizza',name:'Pizzalar'},{id:'tea',name:'Çay & içkilər'},{id:'fruit',name:'Meyvələr'}];
 export const sampleItems=[
 {id:'demo-hookah',category:'hookah',name:'Qəlyan & çay seti',description:'Qəlyan, çay dəsti və limon · şərti təklif',price:35,available:true,image:'',sampleSetPhoto:0},
 {id:'demo-friends',category:'sets',name:'Dostlar seti',description:'İki pivə, qanadlar, fri və soğan halqaları · 2 nəfərlik',price:32,available:true,image:'',sampleSetPhoto:1},
@@ -9,5 +9,8 @@ export const sampleItems=[
 {id:'demo-burger',category:'burgers',name:'Dəm burger',description:'Mal əti, çedar, turşu xiyar və kartof fri',price:14,available:true,image:'',samplePhoto:2},
 {id:'demo-pizza',category:'pizza',name:'Pepperoni pizza',description:'Mozzarella, pepperoni və pomidor sousu · 30 sm',price:18,available:true,image:'',samplePhoto:3},
 {id:'demo-tea',category:'tea',name:'Çay dəsti',description:'Dəmlənmiş qara çay, limon · 2 nəfərlik',price:8,available:true,image:'',samplePhoto:4},
-{id:'demo-platter',category:'snacks',name:'Pub qəlyanaltı seti',description:'Soğan halqaları, pendir çubuqları və fri',price:22,available:true,image:'',samplePhoto:5}
+{id:'demo-platter',category:'snacks',name:'Pub qəlyanaltı seti',description:'Soğan halqaları, pendir çubuqları və fri',price:22,available:true,image:'',samplePhoto:5},
+{id:'demo-fruit',category:'fruit',name:'Meyvə tabağı',description:'Mövsüm meyvələrindən hazırlanmış paylaşım tabağı',price:16,available:true,image:'',sampleExtraPhoto:0},
+{id:'demo-nuggets',category:'snacks',name:'Naqqets & fri',description:'Xırtıldayan toyuq naqqetsləri, kartof fri və sous',price:10,available:true,image:'',sampleExtraPhoto:1},
+{id:'demo-cheese',category:'snacks',name:'Saçaq pendir & noxud',description:'Pivə süfrəsi üçün pendir və ədviyyatlı noxud',price:6,available:true,image:'',sampleExtraPhoto:2}
 ];

@@ -77,3 +77,9 @@ Xəritə paneli adminin daxil etdiyi ünvan üzrə Google Maps axtarışını a�
 Müştəri səhifəsi və admin paneli açıq krem/yaşıl rənglərdədir. Paneldə yüklənmiş orijinal profil şəkli həm başlıqda, həm üz qabığında göstərilir; şəkil dəyişdirilmir. Müştəri Wi-Fi şifrəsi ilk açılışda maskalanır, “Göstər” ilə 15 saniyə görünür, kopyalamadan və səhifədən uzaqlaşmadan sonra yenidən gizlənir. Wi-Fi pəncərəsi kopyalamadan sonra bağlanır; bağlama düyməsi, Escape və pəncərədən kənara toxunmaq da işləyir. Bu, görünüş davranışıdır: müştəri Wi-Fi məlumatları açıq API-də qonaqlara təqdim olunur, admin şifrəsi deyil.
 
 Nümunə menyuya qəlyan–çay, dostlar və çay süfrəsi setləri əlavə olunub. Mövcud nümunə bazasında yalnız bu üç yeni məhsul və əlaqəli kateqoriyalar bir dəfə əlavə edilir; əvvəlki redaktələr saxlanır. Həqiqi menyu rejimində avtomatik məhsul əlavə edilmir. Nümunə şəkilləri və qiymətləri həqiqi məkan təklifi kimi təqdim etməyin.
+
+## TikTok profilindən təsdiqlənən əlaqə
+
+Dəm RestoPub: Buzovna, Zuğulba 24 B; +994 70 686 12 11; WhatsApp eyni nömrədədir; TikTok `@cahanhsv`. Birbaşa zəng, WhatsApp və xəritə keçidləri üz qabığının altında göstərilir və paneldən dəyişən məlumatları izləyir. Məkan məlumatları aşağıda ilkin olaraq açıqdır. Mövcud yüklənmiş loqo və profil şəkli dəyişdirilmir.
+
+Nümunə kataloq 12 məhsula qədər genişləndirilib: meyvə tabağı, naqqets–fri və saçaq pendir–noxud əlavə olunub. Bunların qiymət və şəkilləri təsdiqlənmiş real təklif deyil. Əlavələr nümunə rejimində bir dəfə tətbiq olunur, həqiqi menyu və mövcud redaktələr əvəz edilmir.
