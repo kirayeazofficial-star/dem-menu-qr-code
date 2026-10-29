@@ -110,6 +110,9 @@ async function load() {
     const response = await fetch('/api/settings');
     if (!response.ok) throw new Error('Settings unavailable');
     settings = await response.json();
+    setText('visible-wifi-name', settings.wifiName || 'Heyətimizdən soruşun');
+    setText('visible-wifi-password', settings.wifiPassword || 'Heyətimizdən soruşun');
+    $('visible-wifi-copy').hidden = !settings.wifiPassword;
     document.title = `${settings.name} · Menyu`;
     setText('venue-name', settings.name);
     setText('header-address', settings.address);
@@ -146,6 +149,8 @@ async function load() {
     renderCategories();
     renderItems();
   } catch {
+    setText('visible-wifi-name', 'Məlumat yüklənmədi');
+    setText('visible-wifi-password', 'Heyətimizdən soruşun');
     $('items').textContent = 'Menyu yüklənmədi. Səhifəni yeniləyin.';
     $('load-error').hidden = false;
     setText('load-error', 'Serverlə əlaqə qurulmadı. Bir az sonra yenidən yoxlayın.');
@@ -171,3 +176,13 @@ $('wifi-copy').onclick = async () => {
   }
 };
 load();
+
+$('visible-wifi-copy').onclick = async () => {
+  if (!settings?.wifiPassword) return;
+  try {
+    await navigator.clipboard.writeText(settings.wifiPassword);
+    setText('visible-copy-status', 'Şifrə kopyalandı.');
+  } catch {
+    setText('visible-copy-status', 'Şifrəni seçərək kopyalaya bilərsiniz.');
+  }
+};

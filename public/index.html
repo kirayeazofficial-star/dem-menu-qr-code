@@ -26,9 +26,16 @@
       <span class="logo-frame"><img id="profile" alt="Dəm loqosu" hidden><span id="fallback-brand" class="classic-logo"><img src="/flame.svg" alt=""><strong>DƏM</strong><small>RESTOPUB</small></span></span>
       <span class="brand-text"><h1 id="venue-name">Dəm RestoPub</h1><span id="header-address">Buzovna, Zuğulba 24 B</span></span>
     </a>
-    <button id="wifi-open" class="utility-button"><svg class="icon"><use href="#i-wifi"/></svg><span>Wi-Fi</span></button>
+    <a class="utility-button" href="#contact"><svg class="icon"><use href="#i-phone"/></svg><span>Əlaqə</span></a>
   </header>
 
+  <section class="wifi-strip" aria-label="Wi-Fi bağlantısı">
+    <button id="wifi-open" class="wifi-strip-label" aria-label="Wi-Fi məlumatları"><svg class="icon"><use href="#i-wifi"/></svg><span>Wi-Fi</span></button>
+    <div class="wifi-strip-field"><span>Şəbəkə</span><strong id="visible-wifi-name">Yüklənir…</strong></div>
+    <div class="wifi-strip-field"><span>Şifrə</span><strong id="visible-wifi-password">Yüklənir…</strong></div>
+    <button id="visible-wifi-copy" class="wifi-strip-copy" aria-label="Wi-Fi şifrəsini kopyala" hidden><svg class="icon"><use href="#i-copy"/></svg><span>Kopyala</span></button>
+    <span id="visible-copy-status" class="wifi-copy-status" role="status"></span>
+  </section>
   <section class="cover" aria-label="Məkanın üz qabığı">
     <img id="hero-photo" src="/assets/pub-hero.png" alt="Pub atmosferində soyuq pivə və qəlyanaltılar" fetchpriority="high">
     <div class="cover-tint"></div>
