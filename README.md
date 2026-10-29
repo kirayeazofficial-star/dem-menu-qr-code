@@ -38,7 +38,7 @@ Vercel Storage qoşulma pəncərəsində prefiks kimi `TURSO` seçilərsə, yara
    - `TURSO_AUTH_TOKEN`: bazanın məxfi giriş açarı.
    - `DEM_ADMIN_PASSWORD`: yalnız sizin bildiyiniz 12–512 simvolluq admin şifrəsi.
 3. Node.js 24.x seçin, framework preset **Other**, root directory repozitoriyanın kökü olsun. Build command `npm run build`, output directory `public` olaraq `vercel.json`-dan gəlir.
-4. GitHub `main` dalını deploy edin. İlk API sorğusunda cədvəllər və ilkin admin hesabı avtomatik yaradılır. Təkrar deploy məlumatları və admin şifrəsini dəyişmir.
+4. GitHub `main` dalını deploy edin. İlk API sorğusunda cədvəllər və ilkin admin hesabı avtomatik yaradılır. Eyni şifrə ilə təkrar deploy məlumatları və admin şifrəsini dəyişmir. `DEM_ADMIN_PASSWORD` yeni dəyərə dəyişdirilərsə, şifrə bir dəfə yenilənir və sessiyalar bağlanır.
 5. `/admin` yolundan daxil olun, orijinal loqonu və menyunu əlavə edin. Saytın yayımlanmış ünvanını yazın, yadda saxlayın və QR kodu yükləyin. Çapdan əvvəl başqa telefonla, mobil internet üzərindən yoxlayın.
 
 Məxfi açarları GitHub-a, ekran şəkillərinə və çata yerləşdirməyin. Vercel preview və production üçün ayrı bazalar tövsiyə olunur: eyni bazaya bağlanan preview real menyunu da dəyişir. Uzaq bazanın faktiki qoşulması və Vercel deployment-i bu layihənin lokal testləri ilə təsdiqlənmir; yayım sonrası yoxlanmalıdır.
@@ -47,7 +47,7 @@ Vercel-də HTTPS cookie və etibarlı proxy parametrləri avtomatik tətbiq olun
 
 ## Lokal iş və digər Node.js hostinqləri
 
-`TURSO_DATABASE_URL` olmadan lokal SQLite `data/dem.sqlite` faylında işləyir. Köhnə `data/uploads/` şəkillərinin oxunması saxlanılıb; yeni şəkillər bazaya yazılır. Lokal məlumatlar uzaq bazaya avtomatik köçürülmür. Daimi diskli hostinqdə `data/` qovluğunu ehtiyat nüsxələyin. Yerli rejim `npm run admin:set` ilə, uzaq rejim isə təhlükəsiz verilmiş eyni baza dəyişənləri ilə admin şifrəsini yeniləməyə imkan verir; mövcud sessiyalar bağlanır. `DEM_ADMIN_PASSWORD` yalnız ilk admin hesabını yaradır, mövcud hesabın şifrəsini dəyişmir.
+`TURSO_DATABASE_URL` olmadan lokal SQLite `data/dem.sqlite` faylında işləyir. Köhnə `data/uploads/` şəkillərinin oxunması saxlanılıb; yeni şəkillər bazaya yazılır. Lokal məlumatlar uzaq bazaya avtomatik köçürülmür. Daimi diskli hostinqdə `data/` qovluğunu ehtiyat nüsxələyin. Yerli rejim `npm run admin:set` ilə, uzaq rejim isə təhlükəsiz verilmiş eyni baza dəyişənləri ilə admin şifrəsini yeniləməyə imkan verir; mövcud sessiyalar bağlanır. `DEM_ADMIN_PASSWORD` ilk admin hesabını yaradır; əvvəllər istifadə edilməmiş yeni dəyər təyin edildikdə şifrəni bir dəfə yeniləyir. Köhnə deployment-in təkrar başlaması şifrəni əvvəlki dəyərə qaytarmır.
 
 | Dəyişən | Standart | Məqsəd |
 | --- | --- | --- |
@@ -56,7 +56,7 @@ Vercel-də HTTPS cookie və etibarlı proxy parametrləri avtomatik tətbiq olun
 | `DATA_DIR` | `data` | Lokal bazanın qovluğu |
 | `TURSO_DATABASE_URL` | yoxdur | Qalıcı bulud bazası; Vercel-də tələb olunur |
 | `TURSO_AUTH_TOKEN` | yoxdur | Uzaq bazanın məxfi giriş açarı |
-| `DEM_ADMIN_PASSWORD` | yoxdur | İlk admin hesabını yaradır |
+| `DEM_ADMIN_PASSWORD` | yoxdur | Admin hesabını yaradır və yeni dəyərlə şifrəni yeniləyir |
 | `COOKIE_SECURE` | `false` | Digər HTTPS hostinqlərdə `true` qoyun |
 | `TRUST_PROXY` | `false` | Bir etibarlı reverse proxy üçün `true` qoyun |
 
@@ -91,3 +91,9 @@ Sahibin təyin etdiyi ilkin iş saatı 18:00–01:00, qonaq Wi-Fi adı Dəm Rest
 Masa rezervi forması ad, təqvim tarixi, Bakı vaxtı ilə saat, qonaq sayı və istəyə görə qeyd toplayır. Keçmiş vaxtlar qəbul edilmir. Forma yalnız WhatsApp-da əvvəlcədən hazırlanmış sorğu açır; mesajı istifadəçi göndərir. Rezervlər tətbiq bazasında saxlanmır və avtomatik təsdiqlənmir. Telefon nömrəsi paneldə dəyişəndə rezerv sorğusunun ünvanı da dəyişir.
 
 Admin paneli saytın `/admin` yolundadır; giriş üçün Vercel-də ilkin olaraq `DEM_ADMIN_PASSWORD` kimi təyin olunan şifrə istifadə edilir.
+
+## Admin şifrəsi unudulubsa
+
+Vercel layihəsində Environment Variables bölməsində `DEM_ADMIN_PASSWORD` üçün yeni, əvvəllər istifadə edilməmiş, 12–512 simvolluq şifrə təyin edin; Production üçün yadda saxlayın və Redeploy edin. Yeni yayımın ilk API sorğusunda şifrə yenilənir və köhnə sessiyalar bağlanır. Şifrəni çata göndərməyin.
+
+Telefon +994 70 686 12 11 formatında göstərilir. Wi-Fi düymələri tək əməliyyat qrupundadır; telefon və WhatsApp ayrıca kartda yerləşir. Üz qabığı bölünməmiş pub interyeridir, loqo sağ tərəfdədir.

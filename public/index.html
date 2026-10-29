@@ -29,21 +29,21 @@
     <a id="header-contact" class="utility-button" href="tel:+994706861211"><svg class="icon"><use href="#i-phone"/></svg><span>Əlaqə</span></a>
   </header>
 
-  <section class="wifi-strip" aria-label="Wi-Fi bağlantısı">
+  <section class="wifi-strip wifi-card" aria-label="Wi-Fi bağlantısı">
     <button id="wifi-open" class="wifi-strip-label" aria-label="Wi-Fi məlumatları"><svg class="icon"><use href="#i-wifi"/></svg><span>Wi-Fi</span></button>
     <div class="wifi-strip-field"><span>Şəbəkə</span><strong id="visible-wifi-name">Yüklənir…</strong></div>
     <div class="wifi-strip-field"><span>Şifrə</span><strong id="visible-wifi-password">••••••••</strong></div>
-    <button id="wifi-reveal" class="wifi-strip-copy" hidden>Göstər</button><button id="visible-wifi-copy" class="wifi-strip-copy" aria-label="Wi-Fi şifrəsini kopyala" hidden><svg class="icon"><use href="#i-copy"/></svg><span>Kopyala</span></button>
+    <div class="wifi-actions"><button id="wifi-reveal" class="wifi-strip-copy" hidden>Göstər</button><button id="visible-wifi-copy" class="wifi-strip-copy" aria-label="Wi-Fi şifrəsini kopyala" hidden><svg class="icon"><use href="#i-copy"/></svg><span>Kopyala</span></button></div>
     <span id="visible-copy-status" class="wifi-copy-status" role="status"></span>
   </section>
   <section class="cover" aria-label="Məkanın üz qabığı">
-    <img id="hero-photo" src="/assets/pub-hero.png" alt="Pub atmosferində soyuq pivə və qəlyanaltılar" fetchpriority="high">
+    <img id="hero-photo" src="/assets/lounge-cover.png" alt="İsti işıqlı, yaşıl oturacaqlı pub interyeri və qəlyanaltı süfrəsi" fetchpriority="high">
     <div class="cover-tint"></div><div class="cover-logo"><img id="cover-profile" alt="Dəm RestoPub loqosu" hidden><span id="cover-logo-fallback" class="classic-logo"><img src="/flame.svg" alt=""><strong>DƏM</strong><small>RESTOPUB</small></span></div>
     <div class="cover-caption"><span class="cover-kicker">DƏM RESTOPUB</span><p id="tagline">Yaxşı dadlar. Xoş anlar.</p></div>
     <span id="photo-caption" class="photo-caption">İllüstrativ şəkil</span>
   </section>
 
-  <section class="contact-rail" aria-label="Məkanla əlaqə"><a id="quick-call" class="rail-item" href="tel:+994706861211"><svg class="icon"><use href="#i-phone"/></svg><span><small>Zəng et</small><strong id="quick-phone">070 686 12 11</strong></span></a><a id="quick-whatsapp" class="rail-item whatsapp-item" href="https://wa.me/994706861211" target="_blank" rel="noopener"><svg class="icon"><use href="#i-chat"/></svg><span><small>WhatsApp</small><strong>Aktivdir</strong></span></a><a id="quick-map" class="rail-item" href="https://www.google.com/maps/search/?api=1&amp;query=Buzovna%20Zu%C4%9Fulba%2024%20B" target="_blank" rel="noopener"><svg class="icon"><use href="#i-pin"/></svg><span><small>Ünvan</small><strong id="quick-address">Buzovna, Zuğulba 24 B</strong></span></a></section>
+  <section class="contact-rail" aria-label="Məkanla əlaqə"><a id="quick-call" class="rail-item" href="tel:+994706861211"><svg class="icon"><use href="#i-phone"/></svg><span><small>Zəng et</small><strong id="quick-phone">+994 70 686 12 11</strong></span></a><a id="quick-whatsapp" class="rail-item whatsapp-item" href="https://wa.me/994706861211" target="_blank" rel="noopener"><svg class="icon"><use href="#i-chat"/></svg><span><small>WhatsApp</small><strong>Aktivdir</strong></span></a><a id="quick-map" class="rail-item" href="https://www.google.com/maps/search/?api=1&amp;query=Buzovna%20Zu%C4%9Fulba%2024%20B" target="_blank" rel="noopener"><svg class="icon"><use href="#i-pin"/></svg><span><small>Ünvan</small><strong id="quick-address">Buzovna, Zuğulba 24 B</strong></span></a></section>
   <section class="reservation-banner"><div><strong>Masa rezervi</strong><span>Tarix və qonaq sayını seç, WhatsApp-da dəqiqləşdirək.</span></div><button id="reserve-banner" class="reserve-button">Rezerv sorğusu <svg class="icon"><use href="#i-arrow"/></svg></button></section>
   <main id="menu">
     <div class="menu-toolbar"><div><h2>Menyu</h2><p id="sample-notice" hidden>Nümunə menyu <span>· Qiymətlər şərtidir</span></p></div><label class="search-box"><svg class="icon"><use href="#i-search"/></svg><input id="search" type="search" placeholder="Məhsul axtar" aria-label="Menyuda axtar"></label></div>
@@ -58,7 +58,7 @@
     <details open><summary>Əlaqə və məkan məlumatları <svg class="icon"><use href="#i-chevron"/></svg></summary>
       <div class="details-content">
         <div class="contact-block"><span class="label">Ünvan</span><p id="info-address"></p><a id="info-map" class="text-link" target="_blank" rel="noopener">Xəritədə aç <svg class="icon"><use href="#i-arrow"/></svg></a></div>
-        <div class="contact-block"><span class="label">Telefon</span><a id="contact-phone" class="contact-number"></a><a id="whatsapp-link" class="text-link" target="_blank" rel="noopener" hidden>WhatsApp aktivdir <svg class="icon"><use href="#i-arrow"/></svg></a></div>
+        <div class="contact-block phone-contact-card"><span class="label">Telefon və WhatsApp</span><a id="contact-phone" class="contact-number"></a><a id="whatsapp-link" class="whatsapp-status" target="_blank" rel="noopener" hidden><span class="status-dot" aria-hidden="true"></span>WhatsApp aktivdir <svg class="icon"><use href="#i-arrow"/></svg></a></div>
         <div class="contact-block"><span class="label">İş saatları</span><p id="info-hours">Məlumat üçün bizimlə əlaqə saxlayın.</p></div>
 
       </div>

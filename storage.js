@@ -48,5 +48,20 @@ if(!await db.prepare('SELECT name FROM migrations WHERE name=?').get('venue-hour
   const result=await db.prepare('UPDATE settings SET value=? WHERE id=1 AND value=?').run(JSON.stringify(saved),row.value);
   if(result.rowsAffected)await db.prepare('INSERT OR IGNORE INTO migrations VALUES (?)').run('venue-hours-wifi-v1');
 }
-if(process.env.DEM_ADMIN_PASSWORD){if(process.env.DEM_ADMIN_PASSWORD.length<12)throw new Error('DEM_ADMIN_PASSWORD must contain at least 12 characters');await db.prepare('INSERT OR IGNORE INTO admin VALUES (1, ?)').run(hashPassword(process.env.DEM_ADMIN_PASSWORD));}
+// Apply each new environment password once; an older deployment must not revert a rotation.
+if(process.env.DEM_ADMIN_PASSWORD){
+  const password=process.env.DEM_ADMIN_PASSWORD;
+  if(password.length<12||password.length>512)throw new Error('DEM_ADMIN_PASSWORD must contain 12–512 characters');
+  const marker='admin-env:'+scryptSync(password,'dem-environment-rotation-v1',32).toString('hex');
+  if(!await db.prepare('SELECT name FROM migrations WHERE name=?').get(marker)){
+    const admin=await db.prepare('SELECT hash FROM admin WHERE id=1').get();
+    if(!admin||!verifyPassword(password,admin.hash)){
+      await client.batch([
+        {sql:'INSERT OR REPLACE INTO admin VALUES (1, ?)',args:[hashPassword(password)]},
+        {sql:'DELETE FROM sessions',args:[]},
+        {sql:'INSERT OR IGNORE INTO migrations VALUES (?)',args:[marker]}
+      ],'write');
+    }else{await db.prepare('INSERT OR IGNORE INTO migrations VALUES (?)').run(marker);}
+  }
+}
 export async function getSettings(){const row=await db.prepare('SELECT value FROM settings WHERE id=1').get();return {...defaults,...JSON.parse(row.value)};}

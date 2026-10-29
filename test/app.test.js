@@ -19,3 +19,12 @@ test('QR requires a configured URL and renders a real PNG',async()=>{assert.equa
 test('uploads reject executable content and accept image signatures',async()=>{const bad=new FormData();bad.append('image',new Blob(['<svg onload="alert(1)"></svg>'],{type:'image/svg+xml'}),'bad.svg');assert.equal((await request('/api/upload',{method:'POST',headers:{Cookie:cookie},body:bad})).status,400);const good=new FormData();good.append('image',new Blob([Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jRZkAAAAASUVORK5CYII=','base64')],{type:'image/png'}),'logo.png');const res=await request('/api/upload',{method:'POST',headers:{Cookie:cookie},body:good});assert.equal(res.status,200);const {url}=await res.json();assert.match(url,/^\/uploads\/[a-f0-9]{32}\.png$/);assert.equal((await request(url)).status,200);});
 test('saved menu survives server restart',async()=>{server.kill();await once(server,'exit');server=spawn(process.execPath,['server.js'],{env:{...process.env,DATA_DIR:data,PORT:String(port),HOST:'127.0.0.1'},stdio:['ignore','pipe','pipe']});await once(server.stdout,'data');const saved=await (await request('/api/settings')).json();assert.equal(saved.wifiName,'DEM Guest');assert.equal(saved.items[0].name,'Qara çay');assert.equal((await request('/api/session',{headers:{Cookie:cookie}})).status,200);});
 test('logout invalidates session server-side',async()=>{assert.equal((await request('/api/logout',{method:'POST',headers:{Cookie:cookie}})).status,200);assert.equal((await request('/api/session',{headers:{Cookie:cookie}})).status,401);});
+
+test('new environment password rotates sessions and old deployments cannot revert it',async()=>{
+ const login=await request('/api/login',{method:'POST',...json({password})});assert.equal(login.status,200);const active=login.headers.get('set-cookie').split(';')[0];
+ const rotated=password+'-changed';
+ for(const value of [rotated,password]){const run=spawnSync(process.execPath,['--input-type=module','-e',"await import('./storage.js')"],{env:{...process.env,DATA_DIR:data,DEM_ADMIN_PASSWORD:value},encoding:'utf8'});assert.equal(run.status,0,run.stderr);}
+ assert.equal((await request('/api/session',{headers:{Cookie:active}})).status,401);
+ assert.equal((await request('/api/login',{method:'POST',...json({password})})).status,401);
+ assert.equal((await request('/api/login',{method:'POST',...json({password:rotated})})).status,200);
+});

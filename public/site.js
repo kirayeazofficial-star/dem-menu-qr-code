@@ -7,7 +7,7 @@ function concealWifi(){clearTimeout(wifiRevealTimer);setText('visible-wifi-passw
 function closeWifi(){ $('wifi-dialog').close();concealWifi(); }
 
 function setText(id, value) { $(id).textContent = value || ''; }
-function displayPhone(value){const d=value.replace(/\D/g,'');const local=d.startsWith('994')&&d.length===12?'0'+d.slice(3):d;return local.length===10&&local.startsWith('0')?`${local.slice(0,3)} ${local.slice(3,6)} ${local.slice(6,8)} ${local.slice(8)}`:value;}
+function displayPhone(value){const digits=value.replace(/\D/g,'');const international=digits.length===10&&digits.startsWith('0')?'994'+digits.slice(1):digits;return international.length===12&&international.startsWith('994')?`+994 ${international.slice(3,5)} ${international.slice(5,8)} ${international.slice(8,10)} ${international.slice(10)}`:value;}
 function formatPrice(price) {
   return price.toLocaleString('az-AZ', {
     minimumFractionDigits: Number.isInteger(price) ? 0 : 2,
