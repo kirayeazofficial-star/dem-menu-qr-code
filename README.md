@@ -71,3 +71,9 @@ Admin sessiyası 8 saatdır; cookie HttpOnly və SameSite=Strict parametrləri i
 Menyu şəkilləri və pub atmosferi üçün yaradılmış şəkillər layihənin `public/assets/` qovluğundadır. Yeni build `public/sample-menu.json` faylını açıq nümunə məlumatları ilə yaradır. API əlçatan olmayanda müştəri səhifəsi yalnız aydın işarələnmiş nümunə menyu göstərir; bu, bazanın və admin panelinin hazır olması demək deyil. Heç bir admin məlumatı və Wi-Fi şifrəsi bu statik fayla köçürülmür.
 
 Xəritə paneli adminin daxil etdiyi ünvan üzrə Google Maps axtarışını açır. Dəqiq məkan pinini seçmək üçün xəritə keçidini paneldə qeyd edin; “Xəritədə aç” həmin keçiddən istifadə edir. Daxili xəritə istifadəçi “Google xəritəsini göstər” düyməsinə basanda yüklənir; Google xidmətinə brauzerdən giriş tələb olunur. Xəritə rəsmlərinin xarici şəbəkədə yüklənməsi lokal avtomatik testlərlə təsdiqlənməyib.
+
+## Açıq görünüş və şifrə davranışı
+
+Müştəri səhifəsi və admin paneli açıq krem/yaşıl rənglərdədir. Paneldə yüklənmiş orijinal profil şəkli həm başlıqda, həm üz qabığında göstərilir; şəkil dəyişdirilmir. Müştəri Wi-Fi şifrəsi ilk açılışda maskalanır, “Göstər” ilə 15 saniyə görünür, kopyalamadan və səhifədən uzaqlaşmadan sonra yenidən gizlənir. Wi-Fi pəncərəsi kopyalamadan sonra bağlanır; bağlama düyməsi, Escape və pəncərədən kənara toxunmaq da işləyir. Bu, görünüş davranışıdır: müştəri Wi-Fi məlumatları açıq API-də qonaqlara təqdim olunur, admin şifrəsi deyil.
+
+Nümunə menyuya qəlyan–çay, dostlar və çay süfrəsi setləri əlavə olunub. Mövcud nümunə bazasında yalnız bu üç yeni məhsul və əlaqəli kateqoriyalar bir dəfə əlavə edilir; əvvəlki redaktələr saxlanır. Həqiqi menyu rejimində avtomatik məhsul əlavə edilmir. Nümunə şəkilləri və qiymətləri həqiqi məkan təklifi kimi təqdim etməyin.

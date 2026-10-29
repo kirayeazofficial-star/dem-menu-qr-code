@@ -2,6 +2,9 @@ const $ = id => document.getElementById(id);
 let settings;
 let activeCategory = 'all';
 let previewMode = false;
+let wifiRevealTimer;
+function concealWifi(){clearTimeout(wifiRevealTimer);setText('visible-wifi-password',settings?.wifiPassword?'••••••••':'Heyətimizdən soruşun');setText('wifi-reveal','Göstər');}
+function closeWifi(){ $('wifi-dialog').close();concealWifi(); }
 
 function setText(id, value) { $(id).textContent = value || ''; }
 function formatPrice(price) {
@@ -18,6 +21,9 @@ function photograph(item) {
     img.loading = 'lazy';
     img.className = 'dish-image';
     return img;
+  }
+  if (settings.sampleMenu && Number.isInteger(item.sampleSetPhoto)) {
+    const image=document.createElement('div');image.className=`sample-set sample-set-${item.sampleSetPhoto}`;image.setAttribute('role','img');image.setAttribute('aria-label',`${item.name} — nümunə şəkli`);return image;
   }
   if (settings.sampleMenu && Number.isInteger(item.samplePhoto)) {
     const image = document.createElement('div');
@@ -120,7 +126,8 @@ async function load() {
       previewMode = true;
     }
     setText('visible-wifi-name', settings.wifiName || 'Heyətimizdən soruşun');
-    setText('visible-wifi-password', settings.wifiPassword || 'Heyətimizdən soruşun');
+    concealWifi();
+    $('wifi-reveal').hidden=!settings.wifiPassword;
     $('visible-wifi-copy').hidden = !settings.wifiPassword;
     document.title = `${settings.name} · Menyu`;
     setText('venue-name', settings.name);
@@ -133,6 +140,7 @@ async function load() {
     if (settings.profileImage) {
       $('profile').src = settings.profileImage;
       $('profile').hidden = false;
+      $('cover-profile').src=settings.profileImage;$('cover-profile').hidden=false;$('cover-logo-fallback').hidden=true;
       $('fallback-brand').hidden = true;
     }
     if (settings.coverImage) {
@@ -180,12 +188,15 @@ $('wifi-open').onclick = () => {
   setText('copy-status', '');
   $('wifi-dialog').showModal();
 };
-$('wifi-close').onclick = () => $('wifi-dialog').close();
+$('wifi-close').onclick = closeWifi;
+$('wifi-dialog').addEventListener('click',event=>{if(event.target===$('wifi-dialog')){const r=event.target.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)closeWifi();}});
+$('wifi-dialog').addEventListener('close',()=>{setText('wifi-password','');concealWifi();});
+$('wifi-dialog').addEventListener('cancel',concealWifi);
 $('product-close').onclick = () => $('product-dialog').close();
 $('wifi-copy').onclick = async () => {
   try {
     await navigator.clipboard.writeText(settings.wifiPassword);
-    setText('copy-status', 'Şifrə kopyalandı.');
+    closeWifi();setText('visible-copy-status','Şifrə kopyalandı.');
   } catch {
     setText('copy-status', 'Şifrəni seçərək əl ilə kopyalaya bilərsiniz.');
   }
@@ -196,7 +207,7 @@ $('visible-wifi-copy').onclick = async () => {
   if (!settings?.wifiPassword) return;
   try {
     await navigator.clipboard.writeText(settings.wifiPassword);
-    setText('visible-copy-status', 'Şifrə kopyalandı.');
+    concealWifi();setText('visible-copy-status', 'Şifrə kopyalandı.');
   } catch {
     setText('visible-copy-status', 'Şifrəni seçərək kopyalaya bilərsiniz.');
   }
@@ -205,3 +216,6 @@ $('visible-wifi-copy').onclick = async () => {
 $('bottom-wifi').onclick=()=>$('wifi-open').click();
 
 $('load-map').onclick=()=>{const frame=$('venue-map');if(!frame.dataset.src)return;frame.src=frame.dataset.src;frame.hidden=false;$('map-placeholder').hidden=true;};
+
+$('wifi-reveal').onclick=()=>{if(!settings?.wifiPassword)return;if($('wifi-reveal').textContent==='Gizlət'){concealWifi();return;}setText('visible-wifi-password',settings.wifiPassword);setText('wifi-reveal','Gizlət');clearTimeout(wifiRevealTimer);wifiRevealTimer=setTimeout(concealWifi,15000);};
+document.addEventListener('visibilitychange',()=>{if(document.hidden){concealWifi();if($('wifi-dialog').open)closeWifi();}});
